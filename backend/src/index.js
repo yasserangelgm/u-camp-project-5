@@ -4,11 +4,13 @@ const connectDB = require('./config/db');
 const cors = require('cors');
 const app = express();
 
+//Route imports
+const userRoutes = require('./routes/user.routes');
+
 //Middlewares
 require('dotenv').config();
 app.use(cors());
-
-//Route imports
+app.use('/api/', userRoutes);
 
 //Routes
 app.get('/', (req, res) => res.send('Hello World!'));

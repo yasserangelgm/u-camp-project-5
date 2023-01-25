@@ -6,11 +6,13 @@ const app = express();
 
 //Route imports
 const userRoutes = require('./routes/user.routes');
-
+const authRoutes = require('./routes/auth.routes');
 //Middlewares
 require('dotenv').config();
 app.use(cors());
+app.use(express.json());
 app.use('/api/', userRoutes);
+app.use('/api/', authRoutes);
 
 //Routes
 app.get('/', (req, res) => res.send('Hello World!'));

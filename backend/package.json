@@ -1,0 +1,14 @@
+{
+  "name": "e-commerce-backend",
+  "version": "1.0.0",
+  "description": "E-Commerce for SU Casa de arte popular y diseño",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "NodeJS"
+  ],
+  "author": "Yasser Angel",
+  "license": "ISC"
+}

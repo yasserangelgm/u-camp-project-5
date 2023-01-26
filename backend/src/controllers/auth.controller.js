@@ -1,4 +1,3 @@
-const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { expressjwt: expressJwt } = require('express-jwt');
 require('dotenv').config();
@@ -58,44 +57,4 @@ exports.signin = async (req, res) => {
 exports.signout = (req, res) => {
   res.clearCookie('t');
   res.json({ message: 'Cierre de sesión exitoso' });
-};
-
-exports.requireSignIn = expressJwt({
-  secret: process.env.JWT_SECRET,
-  algorithms: ['HS256'], // added later
-  userProperty: 'auth',
-});
-
-exports.isAuthenticate = (req, res, next) => {
-  const token = req.header('x-auth-token');
-  const openToken = jwt.verify(token, process.env.JWT_SECRET);
-  console.log(token, openToken);
-
-  /* let user = req.auth; */ /* && req.profile._id == req.auth._id; */
-  /*  if (!user) {
-    return res.status(403).json({
-      error: 'Acceso denegado',
-    });
-  } */
-
-  req.auth = openToken;
-
-  next();
-};
-
-exports.isAdmin = async (req, res, next) => {
-  try {
-    const user = await User.findById(req.auth._id).select('-hashed_password');
-    if (user.role === 0) {
-      return res.status(403).json({
-        error: 'Acceso denegado: (resource admin)',
-      });
-    }
-  } catch (error) {
-    res.status(500).json({
-      msg: 'Hubo un error',
-      error,
-    });
-  }
-  next();
 };

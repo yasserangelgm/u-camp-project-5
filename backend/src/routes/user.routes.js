@@ -1,13 +1,10 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const { getUsers } = require("../controllers/user.controller");
-const {
-  requireSignIn,
-  isAuthenticate,
-  isAdmin,
-} = require("../controllers/auth.controller");
+const { getUsers } = require('../controllers/user.controller');
 
-router.get("/users", /* isAuthenticate, isAdmin, */ getUsers);
+const { verifyToken, isAdmin } = require('../middlewares/authJwt');
+
+router.get('/users', [verifyToken, isAdmin], getUsers);
 
 module.exports = router;

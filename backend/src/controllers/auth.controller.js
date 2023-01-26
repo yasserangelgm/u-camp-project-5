@@ -1,12 +1,11 @@
-const bcryptjs = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const { expressjwt: expressJwt } = require("express-jwt");
-require("dotenv").config();
-const User = require("../models/user.model");
+const bcryptjs = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const { expressjwt: expressJwt } = require('express-jwt');
+require('dotenv').config();
+const User = require('../models/user.model');
 
 exports.signup = async (req, res) => {
-  const { name, lastname, email, password } = req.body;
-  console.log(req.body);
+  const { name, lastname, email, password, role } = req.body;
   try {
     const newUser = new User({
       name,
@@ -15,58 +14,60 @@ exports.signup = async (req, res) => {
       hashed_password: await User.encryptPassword(password),
     });
 
-    await newUser.save();
-    console.log(newUser);
-    res.send({ newUser });
-    /* const payload = { user: { id: user._id } };
+    if (role) {
+      newUser.role = role;
+    }
 
-    res.json({ payload }); */
+    const savedUser = await newUser.save();
+    const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET, {
+      expiresIn: 2400,
+    });
+    const payload = { token, user: { id: savedUser._id } };
+    res.status(200).json({ payload });
   } catch (error) {
     res.status(400).json({ error: error });
   }
 };
 
-exports.signin = (req, res) => {
-  //find user
+exports.signin = async (req, res) => {
   const { email, password } = req.body;
-  User.findOne({ email }, async (err, user) => {
-    if (err || !user) {
-      return res.status(400).json({
-        error: "El usuario o email no existen",
-      });
-    }
-    //If user is found, authenticate
-    const isPasswordCorrect = await bcryptjs.compare(
-      password,
-      user.hashed_password
-    );
-    if (!isPasswordCorrect) {
-      return res
-        .status(401)
-        .json({ error: "El usuario y la contraseña no coinciden" });
-    }
 
-    //genetate token
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
-    res.cookie("t", token, { expire: new Date() + 3600000 });
-    const { _id, name, email, role } = user;
-    return res.json({ token, user: { _id, name, email, role } });
+  const userFound = await User.findOne({ email });
+
+  if (!userFound)
+    return res.status(400).json({
+      error: 'El usuario o email no existen',
+    });
+
+  const matchPassword = User.comparePasswords(
+    userFound.hashed_password,
+    password
+  );
+
+  if (!matchPassword)
+    return res
+      .status(401)
+      .json({ error: 'El usuario y la contraseña no coinciden' });
+
+  const token = jwt.sign({ id: userFound._id }, process.env.JWT_SECRET, {
+    expiresIn: 2400,
   });
+  res.status(200).json({ token });
 };
 
 exports.signout = (req, res) => {
-  res.clearCookie("t");
-  res.json({ message: "Cierre de sesión exitoso" });
+  res.clearCookie('t');
+  res.json({ message: 'Cierre de sesión exitoso' });
 };
 
 exports.requireSignIn = expressJwt({
   secret: process.env.JWT_SECRET,
-  algorithms: ["HS256"], // added later
-  userProperty: "auth",
+  algorithms: ['HS256'], // added later
+  userProperty: 'auth',
 });
 
 exports.isAuthenticate = (req, res, next) => {
-  const token = req.header("x-auth-token");
+  const token = req.header('x-auth-token');
   const openToken = jwt.verify(token, process.env.JWT_SECRET);
   console.log(token, openToken);
 
@@ -84,15 +85,15 @@ exports.isAuthenticate = (req, res, next) => {
 
 exports.isAdmin = async (req, res, next) => {
   try {
-    const user = await User.findById(req.auth._id).select("-hashed_password");
+    const user = await User.findById(req.auth._id).select('-hashed_password');
     if (user.role === 0) {
       return res.status(403).json({
-        error: "Acceso denegado: (resource admin)",
+        error: 'Acceso denegado: (resource admin)',
       });
     }
   } catch (error) {
     res.status(500).json({
-      msg: "Hubo un error",
+      msg: 'Hubo un error',
       error,
     });
   }

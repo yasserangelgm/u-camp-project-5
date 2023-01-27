@@ -5,6 +5,7 @@ const User = require('../models/user.model');
 
 exports.signup = async (req, res) => {
   const { name, lastname, email, password, role } = req.body;
+  console.log(req.body);
   try {
     const newUser = new User({
       name,
@@ -24,6 +25,7 @@ exports.signup = async (req, res) => {
     const payload = { token, user: { id: savedUser._id } };
     res.status(200).json({ payload });
   } catch (error) {
+    console.log({ error: error });
     res.status(400).json({ error: error });
   }
 };

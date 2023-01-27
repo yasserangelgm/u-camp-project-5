@@ -9,22 +9,21 @@ function RegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const response = await axios.post(
         '/signup',
-        JSON.stringify(
-          {
-            name,
-            lastName,
-            email,
-            password,
-          },
-          {
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true,
-          }
-        )
+        {
+          name: name,
+          lastname: lastName,
+          email: email,
+          password: password,
+        },
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
       );
+
       console.log(response.data);
     } catch (err) {
       if (!err?.response) {

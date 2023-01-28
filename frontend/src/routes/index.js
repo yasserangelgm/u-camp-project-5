@@ -1,9 +1,10 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import ErrorPage from '../pages/error-page/error-page.page';
 import RegisterPage from '../pages/register/register.page';
 import LoginPage from '../pages/login/login.page';
 import Root from '../components/root/root.component';
 import RootAdmin from '../components/root-admin/root-admin.component';
+import { HomePage } from '../pages/home/home.page';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -12,7 +13,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <LoginPage />,
+        element: <HomePage />,
       },
       {
         path: '/signup',

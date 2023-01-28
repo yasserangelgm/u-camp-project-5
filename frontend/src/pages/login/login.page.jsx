@@ -6,8 +6,8 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 const LoginPage = () => {
   const { setAuth } = useAuth();
 
-  const navigate = useNavigate;
-  const location = useLocation;
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const from = location.state?.from?.pathname || '/';
 
@@ -31,11 +31,12 @@ const LoginPage = () => {
         }
       );
       console.log(response.data);
-      const accesToken = response?.data?.token;
+      const accesToken = response?.data;
+      console.log(accesToken);
       setAuth(accesToken);
       navigate(from, { replace: true });
     } catch (err) {
-      if (!err?.response) {
+      if (err?.response) {
         console.log('No hay respuesta del servisor');
       } else {
         console.log(err);

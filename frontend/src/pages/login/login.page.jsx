@@ -1,9 +1,16 @@
-import { useState, useContext } from 'react';
-import AuthContext from '../../context/authProvider';
+import { useState } from 'react';
+import useAuth from '../../hooks/useAuth';
 import axios from '../../api/axios';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 const LoginPage = () => {
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useAuth();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || '/';
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -24,10 +31,12 @@ const LoginPage = () => {
         }
       );
       console.log(response.data);
-      const accesToken = response?.data?.token;
+      const accesToken = response?.data;
+      console.log(accesToken);
       setAuth(accesToken);
+      navigate(from, { replace: true });
     } catch (err) {
-      if (!err?.response) {
+      if (err?.response) {
         console.log('No hay respuesta del servisor');
       } else {
         console.log(err);
@@ -59,6 +68,7 @@ const LoginPage = () => {
           value={password}
         ></input>
         <button>Iniciar sesión</button>
+        <Link to="/signup">Ir al registro</Link>
       </form>
     </div>
   );

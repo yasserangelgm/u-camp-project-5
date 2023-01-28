@@ -1,12 +1,15 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
+import { Footer } from '../footer/footer.component';
+import { AdminHeader } from './admin-header/admin-header.component';
 
 const RootAdmin = () => {
   return (
-    <div>
-      <h1>Root Admin component</h1>
+    <>
+      <AdminHeader />
       <Outlet />
-    </div>
+      <Footer />
+    </>
   );
 };
 

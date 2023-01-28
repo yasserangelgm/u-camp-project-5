@@ -50,8 +50,21 @@ exports.signin = async (req, res) => {
       .status(401)
       .json({ error: 'El usuario y la contraseña no coinciden' });
 
-  const token = jwt.sign({ id: userFound._id }, process.env.JWT_SECRET, {
-    expiresIn: 2400,
+  const accessToken = jwt.sign({ id: userFound._id }, process.env.JWT_SECRET, {
+    expiresIn: '60s',
+  });
+
+  const refreshToken = jwt.sign(
+    { id: userFound._id },
+    process.env.REFRESH_SECRET,
+    {
+      expiresIn: '1d',
+    }
+  );
+  //TODO: Guardar el refresh token en la base de datos
+  res.cookie('jwt', refreshToken, {
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000,
   });
   res.status(200).json({ token, user: { name: userFound.name } });
 };

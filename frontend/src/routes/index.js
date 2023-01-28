@@ -5,6 +5,7 @@ import LoginPage from '../pages/login/login.page';
 import Root from '../components/root/root.component';
 import RootAdmin from '../components/root-admin/root-admin.component';
 import { HomePage } from '../pages/home/home.page';
+import RequireAuth from '../components/require-auth';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -37,25 +38,31 @@ const router = createBrowserRouter([
       },
     ],
   },
+
   {
-    path: '/admin/dashboard/',
-    element: <RootAdmin />,
+    element: <RequireAuth />,
     children: [
       {
-        index: true,
-        element: <div>Root Admin</div>,
-      },
-      {
-        path: '/admin/dashboard/products',
-        element: <LoginPage />,
-      },
-      {
-        path: '/admin/dashboard/users',
-        element: <LoginPage />,
-      },
-      {
-        path: '/admin/dashboard/categories',
-        element: <LoginPage />,
+        path: '/admin/dashboard/',
+        element: <RootAdmin />,
+        children: [
+          {
+            index: true,
+            element: <div>Root Admin</div>,
+          },
+          {
+            path: '/admin/dashboard/products',
+            element: <LoginPage />,
+          },
+          {
+            path: '/admin/dashboard/users',
+            element: <LoginPage />,
+          },
+          {
+            path: '/admin/dashboard/categories',
+            element: <LoginPage />,
+          },
+        ],
       },
     ],
   },

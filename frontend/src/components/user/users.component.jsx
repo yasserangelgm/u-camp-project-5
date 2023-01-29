@@ -1,10 +1,10 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from '../../api/axios';
-
+/* import useRefreshToken from '../../hooks/useRefreshToken'; */
 const Users = () => {
   const [users, setUsers] = useState();
-
+  /* const refresh = useRefreshToken(); */
   useEffect(() => {
     let isMounted = true;
     const controller = new AbortController();
@@ -38,6 +38,7 @@ const Users = () => {
       ) : (
         <p>No hay usuarios que mostrar</p>
       )}
+      {/* <button onClick={() => refresh()}>Refrescar Token</button> */}
     </article>
   );
 };

@@ -61,15 +61,22 @@ exports.signin = async (req, res) => {
       expiresIn: '1d',
     }
   );
-  //TODO: Guardar el refresh token en la base de datos
-  res.cookie('jwt', refreshToken, {
-    httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000,
-  });
-  res.status(200).json({ token, user: { name: userFound.name } });
-};
 
-exports.signout = (req, res) => {
-  res.clearCookie('t');
-  res.json({ message: 'Cierre de sesión exitoso' });
+  try {
+    const updateUser = await User.findByIdAndUpdate(
+      userFound._id,
+      { refresh_token: refreshToken },
+      { new: true }
+    );
+
+    res.cookie('jwt', refreshToken, {
+      httpOnly: true,
+      sameSite: 'None',
+      secure: true,
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+    return res.status(200).json({ accessToken, user: updateUser });
+  } catch (err) {
+    return res.status(409).json({ errror: 'No se pudo actualizar' });
+  }
 };

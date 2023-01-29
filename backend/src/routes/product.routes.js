@@ -9,10 +9,12 @@ const {
   deleteProductById,
 } = require('../controllers/product.controller');
 
+const { verifyToken, isAdmin } = require('../middlewares/authJwt');
+
 router.get('/', getProducts);
-router.post('/', createProduct);
+router.post('/', [verifyToken, isAdmin], createProduct);
 router.get('/:productId', getProductById);
-router.put('/:productId', updateProductById);
-router.delete('/:productId', deleteProductById);
+router.put('/:productId', [verifyToken, isAdmin], updateProductById);
+router.delete('/:productId', [verifyToken, isAdmin], deleteProductById);
 
 module.exports = router;

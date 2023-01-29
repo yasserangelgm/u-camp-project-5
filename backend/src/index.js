@@ -3,6 +3,7 @@ const consola = require('./helpers/consola');
 const connectDB = require('./config/db');
 const cors = require('cors');
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
 const app = express();
 
 //Route imports
@@ -10,19 +11,25 @@ const userRoutes = require('./routes/user.routes');
 const authRoutes = require('./routes/auth.routes');
 const categoryRoutes = require('./routes/category.routes');
 const productRoutes = require('./routes/product.routes');
+const refreshTokenRoute = require('./routes/refresh-token.routes');
+const logoutRoute = require('./routes/logout.routes');
 
 //Middlewares
 require('dotenv').config();
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: '*',
     credentials: true,
   })
 );
-app.use(morgan('dev'));
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(morgan('dev'));
 app.use('/api/', userRoutes);
+app.use('/api/logout', logoutRoute);
 app.use('/api/', authRoutes);
+app.use('/api/', refreshTokenRoute);
 app.use('/api/category', categoryRoutes);
 app.use('/api/product', productRoutes);
 

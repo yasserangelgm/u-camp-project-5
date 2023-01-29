@@ -13,23 +13,23 @@ const categoryRoutes = require('./routes/category.routes');
 const productRoutes = require('./routes/product.routes');
 const refreshTokenRoute = require('./routes/refresh-token.routes');
 const logoutRoute = require('./routes/logout.routes');
+const credentials = require('./middlewares/credentials');
+const corsOptions = require('./config/cors-options');
 
 //Middlewares
 require('dotenv').config();
-app.use(
-  cors({
-    origin: '*',
-    credentials: true,
-  })
-);
-app.use(express.json());
+
+app.use(credentials);
+app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(cookieParser());
 app.use(morgan('dev'));
+app.use('/', refreshTokenRoute);
 app.use('/api/', userRoutes);
 app.use('/api/logout', logoutRoute);
 app.use('/api/', authRoutes);
-app.use('/api/', refreshTokenRoute);
+
 app.use('/api/category', categoryRoutes);
 app.use('/api/product', productRoutes);
 

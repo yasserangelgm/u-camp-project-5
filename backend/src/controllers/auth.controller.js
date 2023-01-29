@@ -71,10 +71,11 @@ exports.signin = async (req, res) => {
 
     res.cookie('jwt', refreshToken, {
       httpOnly: true,
-      sameSite: 'None',
       secure: true,
+      sameSite: 'None',
       maxAge: 24 * 60 * 60 * 1000,
     });
+
     return res.status(200).json({ accessToken, user: updateUser });
   } catch (err) {
     return res.status(409).json({ errror: 'No se pudo actualizar' });

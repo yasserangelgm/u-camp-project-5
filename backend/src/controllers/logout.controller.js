@@ -24,7 +24,7 @@ const handleLogout = async (req, res) => {
       { refresh_token: '' },
       { new: true }
     );
-    res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
+    res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None' });
     return res.status(204).json({ message: `${updateUser.name} cerro sesion` });
   } catch (err) {
     return res.status(409).json({ errror: 'No se pudo cerrar sesion' });

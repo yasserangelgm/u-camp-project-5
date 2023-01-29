@@ -5,6 +5,7 @@ const User = require('../models/user.model');
 
 exports.signup = async (req, res) => {
   const { name, lastname, email, password, role } = req.body;
+  console.log(req.body);
   try {
     const newUser = new User({
       name,
@@ -24,6 +25,7 @@ exports.signup = async (req, res) => {
     const payload = { token, user: { id: savedUser._id } };
     res.status(200).json({ payload });
   } catch (error) {
+    console.log({ error: error });
     res.status(400).json({ error: error });
   }
 };
@@ -48,13 +50,34 @@ exports.signin = async (req, res) => {
       .status(401)
       .json({ error: 'El usuario y la contraseña no coinciden' });
 
-  const token = jwt.sign({ id: userFound._id }, process.env.JWT_SECRET, {
-    expiresIn: 2400,
+  const accessToken = jwt.sign({ id: userFound._id }, process.env.JWT_SECRET, {
+    expiresIn: '60s',
   });
-  res.status(200).json({ token, user: { name: userFound.name } });
-};
 
-exports.signout = (req, res) => {
-  res.clearCookie('t');
-  res.json({ message: 'Cierre de sesión exitoso' });
+  const refreshToken = jwt.sign(
+    { id: userFound._id },
+    process.env.REFRESH_SECRET,
+    {
+      expiresIn: '1d',
+    }
+  );
+
+  try {
+    const updateUser = await User.findByIdAndUpdate(
+      userFound._id,
+      { refresh_token: refreshToken },
+      { new: true }
+    );
+
+    res.cookie('jwt', refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'None',
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
+    return res.status(200).json({ accessToken, user: updateUser });
+  } catch (err) {
+    return res.status(409).json({ errror: 'No se pudo actualizar' });
+  }
 };

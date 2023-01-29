@@ -11,6 +11,8 @@ import RootAdmin from '../components/root-admin/root-admin.component';
 import { HomePage } from '../pages/home/home.page';
 import RequireAuth from '../components/require-auth';
 import { Unauthorized } from '../pages/unauthorized/unauthorized.page';
+import AdminHomePage from '../pages/admin/home/admin-home.page';
+import Users from '../components/user/users.component';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,7 +32,7 @@ const router = createBrowserRouter(
           element={<RootAdmin />}
           errorElement={<ErrorPage />}
         >
-          <Route index element={<HomePage />}></Route>
+          <Route index element={<AdminHomePage />}></Route>
           <Route
             path="/admin/dashboard/products"
             element={<RegisterPage />}
@@ -39,10 +41,7 @@ const router = createBrowserRouter(
             path="/admin/dashboard/categories"
             element={<LoginPage />}
           ></Route>
-          <Route
-            path="/admin/dashboard/users"
-            element={<RegisterPage />}
-          ></Route>
+          <Route path="/admin/dashboard/users" element={<Users />}></Route>
         </Route>
       </Route>
     </>

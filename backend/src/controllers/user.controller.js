@@ -43,16 +43,17 @@ exports.signup = async (req, res) => {
 
 exports.signin = async (req, res) => {
   const { email, password } = req.body;
-  const userFound = await User.findOne({ email });
 
-  if (!userFound)
-    return res.status(400).json({
+  const foundUser = await User.findOne({ email });
+
+  if (!foundUser)
+    return res.status(401).json({
       error: 'El usuario o email no existen',
     });
 
-  const matchPassword = User.comparePasswords(
-    userFound.hashed_password,
-    password
+  const matchPassword = await bcryptjs.compare(
+    password,
+    foundUser.hashed_password
   );
 
   if (!matchPassword)
@@ -60,12 +61,12 @@ exports.signin = async (req, res) => {
       .status(401)
       .json({ error: 'El usuario y la contraseña no coinciden' });
 
-  const accessToken = jwt.sign({ id: userFound._id }, process.env.JWT_SECRET, {
+  const accessToken = jwt.sign({ id: foundUser._id }, process.env.JWT_SECRET, {
     expiresIn: '60s',
   });
 
   const refreshToken = jwt.sign(
-    { id: userFound._id },
+    { id: foundUser._id },
     process.env.REFRESH_SECRET,
     {
       expiresIn: '60s',
@@ -74,7 +75,7 @@ exports.signin = async (req, res) => {
 
   try {
     const updateUser = await User.findByIdAndUpdate(
-      userFound._id,
+      foundUser._id,
       { refresh_token: refreshToken },
       { new: true }
     );

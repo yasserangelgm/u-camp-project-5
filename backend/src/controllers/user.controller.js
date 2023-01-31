@@ -61,7 +61,12 @@ exports.signin = async (req, res) => {
       .status(401)
       .json({ error: 'El usuario y la contraseña no coinciden' });
 
-  const accessToken = jwt.sign({ id: foundUser._id }, process.env.JWT_SECRET, {
+  const userInfo = {
+    id: foundUser._id,
+    role: foundUser.role,
+  };
+
+  const accessToken = jwt.sign({ user: userInfo }, process.env.ACCESS_SECRET, {
     expiresIn: '60s',
   });
 
@@ -80,7 +85,7 @@ exports.signin = async (req, res) => {
       { new: true }
     );
 
-    const userInfo = {
+    const updatedUserInfo = {
       id: updatedUser._id,
       name: updatedUser.name,
       lastname: updatedUser.lastname,
@@ -96,7 +101,7 @@ exports.signin = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000,
     });
 
-    return res.status(200).json({ accessToken, user: userInfo });
+    return res.status(200).json({ accessToken, user: updatedUserInfo });
   } catch (err) {
     return res.status(409).json({ errror: 'No se pudo actualizar' });
   }

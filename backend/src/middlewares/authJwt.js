@@ -14,13 +14,14 @@ exports.verifyToken = async (req, res, next) => {
 
   jwt.verify(token, process.env.ACCESS_SECRET, (err, decoded) => {
     if (err) return res.status(403).json({ error: 'Token no válido' });
-    req.userId = decoded.userInfo.id;
-    req.role = decoded.userInfo.role;
+    console.log(decoded);
+    req.userId = decoded.user.id;
+    req.role = decoded.user.role;
     next();
   });
 };
 
-exports.isAdmin = async (req, res, next) => {
+exports.isAdmin = (req, res, next) => {
   const role = req.role;
   if (role !== 1)
     return res.status(403).json({ error: 'Acceso no autorizado' });

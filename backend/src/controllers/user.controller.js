@@ -1,7 +1,7 @@
-const bcryptjs = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const User = require("../models/user.model");
-require("dotenv").config();
+const bcryptjs = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const User = require('../models/user.model');
+require('dotenv').config();
 
 exports.getUsers = async (req, res) => {
   try {
@@ -30,7 +30,7 @@ exports.signup = async (req, res) => {
 
     //Es necesario??????? crear jwt al crear usuario?????????
     const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET, {
-      expiresIn: "1200s",
+      expiresIn: '1200s',
     });
 
     const payload = { token, user: { id: savedUser._id } };
@@ -48,7 +48,7 @@ exports.signin = async (req, res) => {
 
   if (!foundUser)
     return res.status(401).json({
-      error: "El usuario o email no existen",
+      error: 'El usuario o email no existen',
     });
 
   const matchPassword = await bcryptjs.compare(
@@ -59,37 +59,46 @@ exports.signin = async (req, res) => {
   if (!matchPassword)
     return res
       .status(401)
-      .json({ error: "El usuario y la contraseña no coinciden" });
+      .json({ error: 'El usuario y la contraseña no coinciden' });
 
   const accessToken = jwt.sign({ id: foundUser._id }, process.env.JWT_SECRET, {
-    expiresIn: "60s",
+    expiresIn: '60s',
   });
 
   const refreshToken = jwt.sign(
     { id: foundUser._id },
     process.env.REFRESH_SECRET,
     {
-      expiresIn: "60s",
+      expiresIn: '60s',
     }
   );
 
   try {
-    const updateUser = await User.findByIdAndUpdate(
+    const updatedUser = await User.findByIdAndUpdate(
       foundUser._id,
       { refresh_token: refreshToken },
       { new: true }
     );
 
-    res.cookie("jwt", refreshToken, {
+    const userInfo = {
+      id: updatedUser._id,
+      name: updatedUser.name,
+      lastname: updatedUser.lastname,
+      email: updatedUser.email,
+      refreshToken: updatedUser.refresh_Token,
+      role: updatedUser.role,
+    };
+
+    res.cookie('jwt', refreshToken, {
       httpOnly: true,
       secure: true,
-      sameSite: "None",
+      sameSite: 'None',
       maxAge: 24 * 60 * 60 * 1000,
     });
 
-    return res.status(200).json({ accessToken, user: updateUser });
+    return res.status(200).json({ accessToken, user: userInfo });
   } catch (err) {
-    return res.status(409).json({ errror: "No se pudo actualizar" });
+    return res.status(409).json({ errror: 'No se pudo actualizar' });
   }
 };
 
@@ -103,19 +112,19 @@ exports.logout = async (req, res) => {
   const foundUser = await User.findOne({ refresh_token });
 
   if (!foundUser) {
-    res.clearCookie("jwt", { httpOnly: true });
+    res.clearCookie('jwt', { httpOnly: true });
     return res.sendStatus(204);
   }
 
   try {
     const updateUser = await User.findByIdAndUpdate(
       foundUser._id,
-      { refresh_token: "" },
+      { refresh_token: '' },
       { new: true }
     );
-    res.clearCookie("jwt", { httpOnly: true, secure: true, sameSite: "None" });
+    res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None' });
     return res.status(204).json({ message: `${updateUser.name} cerro sesion` });
   } catch (err) {
-    return res.status(409).json({ errror: "No se pudo cerrar sesion" });
+    return res.status(409).json({ errror: 'No se pudo cerrar sesion' });
   }
 };

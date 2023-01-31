@@ -44,7 +44,7 @@ exports.signup = async (req, res) => {
 exports.signin = async (req, res) => {
   const { email, password } = req.body;
 
-  const foundUser = await User.findOne({ email });
+  const foundUser = await User.findOne({ email }).exec();
 
   if (!foundUser)
     return res.status(401).json({
@@ -77,34 +77,27 @@ exports.signin = async (req, res) => {
       expiresIn: '60s',
     }
   );
+  foundUser.refresh_token = refreshToken;
+  const result = await foundUser.save();
+  console.log(result);
 
-  try {
-    const updatedUser = await User.findByIdAndUpdate(
-      foundUser._id,
-      { refresh_token: refreshToken },
-      { new: true }
-    );
+  const updatedUserInfo = {
+    id: foundUser._id,
+    name: foundUser.name,
+    lastname: foundUser.lastname,
+    email: foundUser.email,
+    refreshToken: foundUser.refresh_token,
+    role: foundUser.role,
+  };
 
-    const updatedUserInfo = {
-      id: updatedUser._id,
-      name: updatedUser.name,
-      lastname: updatedUser.lastname,
-      email: updatedUser.email,
-      refreshToken: updatedUser.refresh_token,
-      role: updatedUser.role,
-    };
+  res.cookie('jwt', refreshToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'None',
+    maxAge: 24 * 60 * 60 * 1000,
+  });
 
-    res.cookie('jwt', refreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'None',
-      maxAge: 24 * 60 * 60 * 1000,
-    });
-
-    return res.status(200).json({ accessToken, user: updatedUserInfo });
-  } catch (err) {
-    return res.status(409).json({ errror: 'No se pudo actualizar' });
-  }
+  return res.status(200).json({ accessToken, user: updatedUserInfo });
 };
 
 exports.logout = async (req, res) => {

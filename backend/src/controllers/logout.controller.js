@@ -11,24 +11,18 @@ const handleLogout = async (req, res) => {
 
   const refresh_token = cookies.jwt;
 
-  const userFound = await User.findOne({ refresh_token });
+  const foundUser = await User.findOne({ refresh_token: refresh_token }).exec();
 
-  if (!userFound) {
-    res.clearCookie('jwt', { httpOnly: true });
+  if (!foundUser) {
+    res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
     return res.sendStatus(204);
   }
 
-  try {
-    const updateUser = await User.findByIdAndUpdate(
-      userFound._id,
-      { refresh_token: '' },
-      { new: true }
-    );
-    res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None' });
-    return res.status(204).json({ message: `${updateUser.name} cerro sesion` });
-  } catch (err) {
-    return res.status(409).json({ errror: 'No se pudo cerrar sesion' });
-  }
+  foundUser.refresh_token = '';
+  const result = await foundUser.save();
+  console.log(result);
+  res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None' });
+  return res.status(204).json({ message: `${updateUser.name} cerro sesion` });
 };
 
 module.exports = handleLogout;

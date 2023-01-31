@@ -6,6 +6,8 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 const LoginPage = () => {
   const { setAuth } = useAuth();
 
+  const { auth } = useAuth();
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -30,10 +32,11 @@ const LoginPage = () => {
           withCredentials: true,
         }
       );
-      console.log(response.data);
-      const accesToken = response?.data;
-      console.log(accesToken);
-      setAuth(accesToken);
+
+      const accessToken = response?.data;
+
+      setAuth(accessToken); //-------------------> Aqui se setea el accesToken a toda la app
+
       navigate(from, { replace: true });
     } catch (err) {
       if (err?.response) {
@@ -47,6 +50,7 @@ const LoginPage = () => {
   return (
     <div>
       <h1>Login Page</h1>
+      {auth ? <i>{auth.accesToken}</i> : <i>No hay token</i>}
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">Correo electrónico:</label>
         <input

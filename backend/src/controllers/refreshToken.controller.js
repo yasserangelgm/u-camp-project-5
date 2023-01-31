@@ -2,13 +2,13 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
 require('dotenv').config();
 
-const handleRefreshToken = (req, res) => {
+const handleRefreshToken = async (req, res) => {
   const cookies = req.cookies;
-  console.log(cookies);
+
   if (!cookies?.jwt) return res.sendStatus(401);
   const refreshToken = cookies.jwt;
 
-  const userFound = User.findOne(refreshToken);
+  const userFound = await User.findOne({ refresh_token: refreshToken });
 
   if (!userFound)
     return res.status(403).json({
@@ -16,13 +16,14 @@ const handleRefreshToken = (req, res) => {
     });
 
   jwt.verify(refreshToken, process.env.REFRESH_SECRET, (err, decoded) => {
-    if (err || userFound._id !== decoded._id) {
-      return res.sendStatus(403);
+    if (err !== null || userFound._id != decoded.id) {
+      return res.status(403).json({ error: 'Token no válido' });
     }
-    const accessToken = jwt.sign({ id: decoded._id }, process.env.JWT_SECRET, {
+    const accessToken = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET, {
       expiresIn: '30s', //TODO: Cambiar duracion en produccion
     });
-    res.json({ accessToken });
+
+    return res.json({ accessToken });
   });
 };
 

@@ -61,7 +61,7 @@ exports.signin = async (req, res) => {
     { id: userFound._id },
     process.env.REFRESH_SECRET,
     {
-      expiresIn: '1d',
+      expiresIn: '60s',
     }
   );
 

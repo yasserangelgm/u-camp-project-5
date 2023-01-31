@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan('dev'));
-app.use('/', refreshTokenRoute);
+app.use('/api/', refreshTokenRoute);
 app.use('/api/', userRoutes);
 app.use('/api/logout', logoutRoute);
 app.use('/api/', authRoutes);

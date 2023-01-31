@@ -5,20 +5,24 @@ const User = require('../models/user.model');
 
 exports.signup = async (req, res) => {
   const { name, lastname, email, password, role } = req.body;
-  console.log(req.body);
+
+  //TODO checar por duplicados usando MONGO validation
   try {
     const newUser = new User({
       name,
       lastname,
       email,
       hashed_password: await User.encryptPassword(password),
+      role: role ? role : 0,
     });
-
+    /* 
     if (role) {
       newUser.role = role;
-    }
+    } */
 
     const savedUser = await newUser.save();
+
+    //Es necesario??????? crear jwt al crear usuario?????????
     const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET, {
       expiresIn: 2400,
     });
@@ -32,7 +36,6 @@ exports.signup = async (req, res) => {
 
 exports.signin = async (req, res) => {
   const { email, password } = req.body;
-
   const userFound = await User.findOne({ email });
 
   if (!userFound)

@@ -27,8 +27,6 @@ app.use(morgan('dev'));
 app.use('/api/', refreshTokenRoute);
 app.use('/api/', userRoutes);
 app.use('/api/logout', logoutRoute);
-app.use('/api/', authRoutes);
-
 app.use('/api/category', categoryRoutes);
 app.use('/api/product', productRoutes);
 

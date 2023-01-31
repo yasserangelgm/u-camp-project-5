@@ -3,8 +3,6 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
 require('dotenv').config();
 
-const User = require('../models/user.model');
-
 exports.getUsers = async (req, res) => {
   try {
     const users = await User.find({});
@@ -24,24 +22,22 @@ exports.signup = async (req, res) => {
       lastname,
       email,
       hashed_password: await User.encryptPassword(password),
-      role: role ? role : 0,
     });
-    /* 
-    if (role) {
-      newUser.role = role;
-    } */
+
+    if (role) newUser.role = role;
 
     const savedUser = await newUser.save();
 
     //Es necesario??????? crear jwt al crear usuario?????????
     const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET, {
-      expiresIn: 2400,
+      expiresIn: '1200s',
     });
+
     const payload = { token, user: { id: savedUser._id } };
-    res.status(200).json({ payload });
-  } catch (error) {
-    console.log({ error: error });
-    res.status(400).json({ error: error });
+    return res.status(201).json({ payload });
+  } catch (err) {
+    console.log({ error: err });
+    return res.status(500).json({ message: err.message });
   }
 };
 

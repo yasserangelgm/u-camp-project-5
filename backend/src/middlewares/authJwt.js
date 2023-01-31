@@ -1,29 +1,28 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/user.model');
 
 require('dotenv').config();
 
 exports.verifyToken = async (req, res, next) => {
-  const authHeader = req.headers['authorization'];
+  const authHeader =
+    req.headers['authorization'] || req.headers['Authorization'];
 
-  console.log(authHeader);
-
-  if (!authHeader)
+  if (!authHeader?.startsWith('Bearer '))
     return res.status(401).json({ error: 'No ha proporcionado un token' });
 
   const token = authHeader.split(' ')[1];
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+  jwt.verify(token, process.env.ACCESS_SECRET, (err, decoded) => {
     if (err) return res.status(403).json({ error: 'Token no válido' });
-    req.userId = decoded.id;
-
+    console.log(decoded);
+    req.userId = decoded.user.id;
+    req.role = decoded.user.role;
     next();
   });
 };
 
-exports.isAdmin = async (req, res, next) => {
-  const user = await User.findById(req.userId);
-  if (user?.role !== 1)
+exports.isAdmin = (req, res, next) => {
+  const role = req.role;
+  if (role !== 1)
     return res.status(403).json({ error: 'Acceso no autorizado' });
 
   next();

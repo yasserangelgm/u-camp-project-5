@@ -8,22 +8,31 @@ const handleRefreshToken = async (req, res) => {
   if (!cookies?.jwt) return res.sendStatus(401);
   const refreshToken = cookies.jwt;
 
-  const userFound = await User.findOne({ refresh_token: refreshToken });
+  const foundUser = await User.findOne({ refresh_token: refreshToken }).exec();
 
-  if (!userFound)
+  if (!foundUser)
     return res.status(403).json({
       error: 'Acceso no autorizado',
     });
 
   jwt.verify(refreshToken, process.env.REFRESH_SECRET, (err, decoded) => {
-    if (err !== null || userFound._id != decoded.id) {
+    if (err !== null || foundUser._id != decoded.id) {
       return res.status(403).json({ error: 'Token no válido' });
     }
+    const userInfo = {
+      id: foundUser._id,
+      name: foundUser.name,
+      lastname: foundUser.lastname,
+      email: foundUser.email,
+      refreshToken: foundUser.refresh_token,
+      role: foundUser.role,
+    };
+
     const accessToken = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET, {
       expiresIn: '30s', //TODO: Cambiar duracion en produccion
     });
 
-    return res.json({ accessToken });
+    return res.json({ accessToken, user: userInfo });
   });
 };
 

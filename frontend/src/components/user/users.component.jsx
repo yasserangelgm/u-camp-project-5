@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 /* import useRefreshToken from '../../hooks/useRefreshToken'; */
 const Users = () => {
   const [users, setUsers] = useState();
   const axiosPrivate = useAxiosPrivate();
   /* const refresh = useRefreshToken(); */
+  const navigate = useNavigate();
+  const location = useLocation();
   useEffect(() => {
     let isMounted = true;
     const controller = new AbortController();
@@ -16,7 +19,11 @@ const Users = () => {
         });
         isMounted && setUsers(response.data);
       } catch (error) {
-        console.log(error);
+        if (error?.code === 'ERR_CANCELED') return;
+        else {
+          navigate('/login', { state: { from: location }, replace: true });
+          console.log(error);
+        }
       }
     };
     getUsers();

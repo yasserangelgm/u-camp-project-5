@@ -1,3 +1,10 @@
+.announcement {
+  background-color: #e8d5d5;
+  color: #b8281e;
+  margin: 0;
+  max-width: 100%;
+}
+
 .main-header {
   display: flex;
   height: 80px;

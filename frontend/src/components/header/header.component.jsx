@@ -1,7 +1,8 @@
-import React from 'react';
+import './header.styles.css';
+
 import { Link, useNavigate } from 'react-router-dom';
 import useLogout from '../../hooks/useLogout';
-import './header.styles.css';
+import Container from 'react-bootstrap/Container';
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -12,6 +13,13 @@ export const Header = () => {
   };
   return (
     <>
+      <Container className="container-fluid announcement">
+        <Container className="container-sm">
+          <Container className="fs-6 text-center text-uppercase py-2">
+            <span>Venta de Enero 15% de descuento</span>
+          </Container>
+        </Container>
+      </Container>
       <header className="main-header">
         <nav>
           <ul className="navigation">

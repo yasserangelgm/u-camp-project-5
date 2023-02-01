@@ -7,7 +7,7 @@ const PersistLogin = () => {
   const [isLoading, setIsLoading] = useState(true);
   const refresh = useRefreshToken();
   const { auth } = useAuth();
-
+  console.log('Estado global :', auth);
   useEffect(() => {
     const verifyRefreshToken = async () => {
       try {

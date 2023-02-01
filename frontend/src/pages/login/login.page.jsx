@@ -35,10 +35,10 @@ const LoginPage = () => {
       );
 
       const accessToken = response?.data.accessToken;
-      const user = response?.data.user;
+      const role = response?.data.user.role;
 
       console.log(response?.data.user.role);
-      setAuth({ user, accessToken }); //-------------------> Aqui se setea el accesToken a toda la app
+      setAuth({ role, accessToken }); //-------------------> Aqui se setea el accesToken a toda la app
       setEmail('');
       setPassword(''); //TODO Alert success
       console.log(auth);

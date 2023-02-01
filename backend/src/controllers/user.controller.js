@@ -67,11 +67,11 @@ exports.signin = async (req, res) => {
   };
 
   const accessToken = jwt.sign({ user: userInfo }, process.env.ACCESS_SECRET, {
-    expiresIn: '60s',
+    expiresIn: '15s',
   });
 
   const refreshToken = jwt.sign(
-    { id: foundUser._id },
+    { id: foundUser._id, role: foundUser.role },
     process.env.REFRESH_SECRET,
     {
       expiresIn: '60s',
@@ -79,7 +79,6 @@ exports.signin = async (req, res) => {
   );
   foundUser.refresh_token = refreshToken;
   const result = await foundUser.save();
-  console.log(result);
 
   const updatedUserInfo = {
     id: foundUser._id,
@@ -96,6 +95,10 @@ exports.signin = async (req, res) => {
     sameSite: 'None',
     maxAge: 24 * 60 * 60 * 1000,
   });
+
+  /* console.log(accessToken);
+  console.log(userInfo);
+  console.log(updatedUserInfo); */
 
   return res.status(200).json({ accessToken, user: updatedUserInfo });
 };

@@ -19,6 +19,7 @@ const handleRefreshToken = async (req, res) => {
     if (err !== null || foundUser._id != decoded.id) {
       return res.status(403).json({ error: 'Token no válido' });
     }
+    console.log(`DECODED: ${JSON.stringify(decoded)}`);
     const userInfo = {
       id: foundUser._id,
       name: foundUser.name,
@@ -28,9 +29,13 @@ const handleRefreshToken = async (req, res) => {
       role: foundUser.role,
     };
 
-    const accessToken = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET, {
-      expiresIn: '30s', //TODO: Cambiar duracion en produccion
-    });
+    const accessToken = jwt.sign(
+      { id: decoded.id, role: foundUser.role },
+      process.env.ACCESS_SECRET,
+      {
+        expiresIn: '30s', //TODO: Cambiar duracion en produccion
+      }
+    );
 
     return res.json({ accessToken, user: userInfo });
   });

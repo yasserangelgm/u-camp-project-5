@@ -13,9 +13,10 @@ exports.verifyToken = async (req, res, next) => {
 
   jwt.verify(token, process.env.ACCESS_SECRET, (err, decoded) => {
     if (err) return res.status(403).json({ error: 'Token no válido' });
-    console.log(decoded);
-    req.userId = decoded.user.id;
-    req.role = decoded.user.role;
+
+    req.userId = decoded.id;
+    req.role = decoded.role;
+    console.log(`VERIFY TOKEN: ${decoded.role}`);
     next();
   });
 };

@@ -29,7 +29,7 @@ exports.signup = async (req, res) => {
     const savedUser = await newUser.save();
 
     //Es necesario??????? crear jwt al crear usuario?????????
-    const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: savedUser._id }, process.env.ACCESS_SECRET, {
       expiresIn: '1200s',
     });
 

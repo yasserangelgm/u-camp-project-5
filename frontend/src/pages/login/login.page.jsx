@@ -34,14 +34,18 @@ const LoginPage = () => {
         }
       );
 
-      const accessToken = response?.data;
+      const accessToken = response?.data.accessToken;
+      const user = response?.data.user;
 
-      setAuth(accessToken); //-------------------> Aqui se setea el accesToken a toda la app
-
+      console.log(response?.data.user.role);
+      setAuth({ user, accessToken }); //-------------------> Aqui se setea el accesToken a toda la app
+      setEmail('');
+      setPassword(''); //TODO Alert success
+      console.log(auth);
       navigate(from, { replace: true });
     } catch (err) {
       if (err?.response) {
-        console.log('No hay respuesta del servisor');
+        console.log('No hay respuesta del servidor'); //TODO manejar los distintos tipos de errores
       } else {
         console.log(err);
       }

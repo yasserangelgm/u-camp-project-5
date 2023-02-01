@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useAuth from '../../hooks/useAuth';
 import axios from '../../api/axios';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import './login.styles.css';
 
 const LoginPage = () => {
-  const { setAuth } = useAuth();
+  const { setAuth, persist, setPersist } = useAuth();
 
   const { auth } = useAuth();
 
@@ -52,6 +52,13 @@ const LoginPage = () => {
     }
   };
 
+  const togglePersirst = () => {
+    setPersist((prev) => !prev);
+  };
+
+  useEffect(() => {
+    localStorage.setItem('persist', persist);
+  }, [persist]);
   return (
     <div>
       <h1>Login Page</h1>
@@ -77,6 +84,15 @@ const LoginPage = () => {
           value={password}
         ></input>
         <button>Iniciar sesión</button>
+        <div>
+          <input
+            type="checkbox"
+            id="persist"
+            onChange={togglePersirst}
+            checked={persist}
+          />
+          <label htmlFor="persist">Recordar en este dispositivo</label>
+        </div>
         <Link to="/signup">Ir al registro</Link>
       </form>
     </div>

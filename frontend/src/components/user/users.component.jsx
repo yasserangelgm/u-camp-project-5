@@ -21,7 +21,7 @@ const Users = () => {
       } catch (error) {
         if (error?.code === 'ERR_CANCELED') return;
         else {
-          /* navigate('/login', { state: { from: location }, replace: true }); */
+          navigate('/login', { state: { from: location }, replace: true });
           console.log(error);
         }
       }

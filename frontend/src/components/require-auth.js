@@ -7,7 +7,7 @@ const RequireAuth = () => {
 
   console.log(auth);
 
-  return auth?.role ? (
+  return auth?.role === 1 ? (
     <Outlet />
   ) : auth ? (
     <Navigate to="/unauthorized" state={{ from: location }} replace />

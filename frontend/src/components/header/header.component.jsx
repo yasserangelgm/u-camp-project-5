@@ -1,8 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import useLogout from '../../hooks/useLogout';
 import './header.styles.css';
 
 export const Header = () => {
+  const navigate = useNavigate();
+  const logout = useLogout();
+  const signOut = async () => {
+    await logout();
+    navigate('/');
+  };
   return (
     <>
       <header className="main-header">
@@ -22,6 +29,9 @@ export const Header = () => {
             </li>
             <li>
               <Link to="/">Home</Link>
+            </li>
+            <li>
+              <button onClick={signOut}>Cerrar sesión</button>
             </li>
           </ul>
         </nav>

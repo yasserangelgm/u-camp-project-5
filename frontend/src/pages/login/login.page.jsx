@@ -2,6 +2,7 @@ import { useState } from 'react';
 import useAuth from '../../hooks/useAuth';
 import axios from '../../api/axios';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import './login.styles.css';
 
 const LoginPage = () => {
   const { setAuth } = useAuth();
@@ -51,7 +52,7 @@ const LoginPage = () => {
     <div>
       <h1>Login Page</h1>
       {auth ? <i>{auth.accesToken}</i> : <i>No hay token</i>}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="login-form">
         <label htmlFor="email">Correo electrónico:</label>
         <input
           type="text"

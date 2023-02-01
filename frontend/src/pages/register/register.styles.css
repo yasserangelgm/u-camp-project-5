@@ -1,0 +1,12 @@
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+}
+
+.signup-form,
+.signup-form input,
+button {
+  margin: 10px 0;
+  font-size: 1.5rem;
+}

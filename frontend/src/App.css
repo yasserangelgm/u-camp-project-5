@@ -1,1 +1,26 @@
+/* .app-button {
+  border-radius: 0;
+  border-color: #000;
+  appearance: none;
+  background-color: #ffffff;
+  padding: 1em 2.35em;
+  color: #000;
+  margin-top: 1rem;
+  font-size: 14px;
+  font-weight: 600;
+}
 
+.app-button:hover {
+  background-color: #ffffff;
+  color: #000000d4;
+  border-color: #000;
+} */
+
+.link-button-text {
+  text-decoration: none;
+  color: #000;
+}
+
+.link-button-text:hover {
+  color: #000000d4;
+}

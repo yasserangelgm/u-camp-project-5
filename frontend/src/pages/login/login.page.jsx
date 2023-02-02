@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import { useEffect, useState } from 'react';
 import useAuth from '../../hooks/useAuth';
 import axios from '../../api/axios';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import './login.styles.css';
 
 const LoginPage = () => {
-  const { setAuth } = useAuth();
+  const { setAuth, persist, setPersist } = useAuth();
 
   const { auth } = useAuth();
 
@@ -18,6 +21,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (e) => {
+    console.log(email, password);
     e.preventDefault();
     try {
       const response = await axios.post(
@@ -35,10 +39,10 @@ const LoginPage = () => {
       );
 
       const accessToken = response?.data.accessToken;
-      const user = response?.data.user;
+      const role = response?.data.user.role;
 
       console.log(response?.data.user.role);
-      setAuth({ user, accessToken }); //-------------------> Aqui se setea el accesToken a toda la app
+      setAuth({ role, accessToken }); //-------------------> Aqui se setea el accesToken a toda la app
       setEmail('');
       setPassword(''); //TODO Alert success
       console.log(auth);
@@ -52,34 +56,81 @@ const LoginPage = () => {
     }
   };
 
-  return (
-    <div>
-      <h1>Login Page</h1>
-      {auth ? <i>{auth.accesToken}</i> : <i>No hay token</i>}
-      <form onSubmit={handleSubmit} className="login-form">
-        <label htmlFor="email">Correo electrónico:</label>
-        <input
-          type="text"
-          id="email"
-          autoComplete="off"
-          required
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-        ></input>
+  const togglePersist = () => {
+    setPersist((prev) => !prev);
+  };
 
-        <label htmlFor="password">Contraseña:</label>
-        <input
-          type="password"
-          id="password"
-          autoComplete="off"
-          required
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-        ></input>
-        <button>Iniciar sesión</button>
-        <Link to="/signup">Ir al registro</Link>
-      </form>
-    </div>
+  useEffect(() => {
+    localStorage.setItem('persist', persist);
+  }, [persist]);
+  return (
+    <>
+      <Container className=" py-4">
+        <h1 className="py-2 text-center">Tu cuenta</h1>
+        <Container className="py-3 px-4 login-form-container">
+          <form onSubmit={handleSubmit}>
+            <h3>Iniciar sesión</h3>
+            <div className="form-group mb-3">
+              <input
+                id="email"
+                type="email"
+                placeholder="Escriba su e-mail"
+                className="form-control"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <Form.Text className="text-muted">
+                Nunca compartiremos tu correo con nadie más.
+              </Form.Text>
+            </div>
+
+            <div className="form-group mb-3">
+              <input
+                id="password"
+                type="password"
+                placeholder="Escriba su contraseña"
+                className="form-control shadow-none text-input"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+
+            <Button
+              variant="ligth"
+              type="submit"
+              className="app-button bg-light border border-secondary"
+            >
+              Iniciar sesión
+            </Button>
+            <div className="form-group mb-3">
+              <div>
+                <input
+                  type="checkbox"
+                  id="persist"
+                  onClick={togglePersist}
+                ></input>
+                <label className="form-check-label" htmlFor="exampleCheck1">
+                  Recordarme en este dispositivo
+                </label>
+              </div>
+            </div>
+          </form>
+        </Container>
+        <Container className="py-3 register-form-container">
+          <Form className="px-4">
+            <h3 className="mt-5">Registro</h3>
+            <p>
+              Creando una cuenta en nuestra tienda, podrás hacer el proceso de
+              compra más rápido, guardar multiples direcciones de envío, ver y
+              trackear tus pedidos y más
+            </p>
+            <Button variant="primary" type="button" className="app-button">
+              <Link to="/signup" className="link-button-text">
+                Crear cuenta
+              </Link>
+            </Button>
+          </Form>
+        </Container>
+      </Container>
+    </>
   );
 };
 

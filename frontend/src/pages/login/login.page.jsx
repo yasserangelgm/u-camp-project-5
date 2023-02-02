@@ -67,7 +67,7 @@ const LoginPage = () => {
     <>
       <Container className=" py-4">
         <h1 className="py-2 text-center">Tu cuenta</h1>
-        <Container className="py-3 login-form-container">
+        <Container className="py-3 px-4 login-form-container">
           <form onSubmit={handleSubmit}>
             <h3>Iniciar sesión</h3>
             <div className="form-group mb-3">
@@ -75,10 +75,8 @@ const LoginPage = () => {
                 id="email"
                 type="email"
                 placeholder="Escriba su e-mail"
-                className="form-control shadow-none text-input "
-                onChange={(event) => {
-                  setEmail(event.target.value);
-                }}
+                className="form-control"
+                onChange={(e) => setEmail(e.target.value)}
               />
               <Form.Text className="text-muted">
                 Nunca compartiremos tu correo con nadie más.
@@ -91,10 +89,15 @@ const LoginPage = () => {
                 type="password"
                 placeholder="Escriba su contraseña"
                 className="form-control shadow-none text-input"
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
 
-            <Button variant="primary" type="submit" className="app-button">
+            <Button
+              variant="ligth"
+              type="submit"
+              className="app-button bg-light border border-secondary"
+            >
               Iniciar sesión
             </Button>
             <div className="form-group mb-3">
@@ -104,7 +107,7 @@ const LoginPage = () => {
                   id="persist"
                   onClick={togglePersist}
                 ></input>
-                <label className="form-check-label" for="exampleCheck1">
+                <label className="form-check-label" htmlFor="exampleCheck1">
                   Recordarme en este dispositivo
                 </label>
               </div>

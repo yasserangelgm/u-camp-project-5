@@ -14,7 +14,7 @@ export const Header = () => {
   }; */
   return (
     <>
-      <Container className="container-fluid announcement">
+      <Container className="container-fluid bg-warning mw-100">
         <Container className="container-sm">
           <Container className="fs-6 text-center text-uppercase py-2">
             <span>Venta de Enero 15% de descuento</span>

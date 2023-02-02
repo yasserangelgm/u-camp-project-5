@@ -1,3 +1,7 @@
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+
 import { useState } from 'react';
 import axios from '../../api/axios';
 import './register.styles.css';
@@ -36,47 +40,68 @@ function RegisterPage() {
   };
 
   return (
-    <div>
-      <h1>Registro</h1>
-      <form onSubmit={handleSubmit} className="signup-form">
-        <label htmlFor="name">Nombre:</label>
-        <input
-          type="text"
-          id="name"
-          autoComplete="off"
-          required
-          onChange={(e) => setName(e.target.value)}
-        ></input>
+    <>
+      <Container className=" py-4">
+        <h1 className="py-2 text-center">Tu cuenta</h1>
+        <Container className="py-3 login-form-container">
+          <Form className="" onSubmit={handleSubmit}>
+            <h3>Crear cuenta</h3>
+            <Form.Group className="mb-3">
+              {/* <Form.Label>Correo eléctronico</Form.Label> */}
+              <Form.Control
+                type="text"
+                placeholder="Escriba su nombre"
+                className="shadow-none text-input "
+                id="name"
+                autoComplete="off"
+                required
+                onChange={(e) => setName(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              {/* <Form.Label>Correo eléctronico</Form.Label> */}
+              <Form.Control
+                type="text"
+                placeholder="Escriba su apellido"
+                className="shadow-none text-input "
+                id="lastname"
+                autoComplete="off"
+                required
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              {/* <Form.Label>Correo eléctronico</Form.Label> */}
+              <Form.Control
+                type="email"
+                placeholder="Escriba su e-mail"
+                className="shadow-none text-input "
+                id="email"
+                autoComplete="off"
+                required
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </Form.Group>
 
-        <label htmlFor="lastname">Apellido:</label>
-        <input
-          type="text"
-          id="lastname"
-          autoComplete="off"
-          required
-          onChange={(e) => setLastName(e.target.value)}
-        ></input>
-
-        <label htmlFor="email">Correo electrónico:</label>
-        <input
-          type="text"
-          id="email"
-          autoComplete="off"
-          required
-          onChange={(e) => setEmail(e.target.value)}
-        ></input>
-
-        <label htmlFor="password">Contraseña:</label>
-        <input
-          type="password"
-          id="password"
-          autoComplete="off"
-          required
-          onChange={(e) => setPassword(e.target.value)}
-        ></input>
-        <button>Registrar</button>
-      </form>
-    </div>
+            <Form.Group className="mb-3">
+              {/* <Form.Label>Contraseña</Form.Label> */}
+              <Form.Control
+                type="password"
+                placeholder="Escriba una contraseña"
+                className="shadow-none text-input"
+                id="password"
+                autoComplete="off"
+                required
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </Form.Group>
+            <Button variant="primary" type="submit" className="app-button">
+              Registrar
+            </Button>
+          </Form>
+        </Container>
+      </Container>
+    </>
   );
 }
 

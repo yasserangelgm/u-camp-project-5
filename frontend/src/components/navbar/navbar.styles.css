@@ -1,0 +1,136 @@
+.nav-wrapper {
+  height: 80px;
+}
+
+.nav-container {
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: 3fr 6fr 1.5fr 1.5fr;
+  grid-template-areas: 'shop-icons-container logo-container search-icon-container menu-container';
+}
+
+.nav-container-item {
+  display: flex;
+  align-items: center;
+}
+
+.logo-container {
+  grid-area: logo-container;
+  display: flex;
+  justify-content: center;
+}
+.logo-container span {
+  margin-left: 0.6rem;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+}
+.menu-container {
+  grid-area: menu-container;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.shop-icons-container {
+  grid-area: shop-icons-container;
+  justify-content: space-around;
+}
+
+.search-icon-container {
+  justify-content: center;
+  grid-area: search-icon-container;
+}
+
+.top-logo {
+  width: 40px;
+}
+
+.links-container a {
+  text-decoration: none;
+  cursor: pointer;
+  color: black;
+  margin: 0 1rem;
+  display: block;
+  font-size: 1rem;
+}
+
+.links-container.active {
+  width: 100%;
+  height: calc(100vh - 120px);
+  display: block;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  top: 120px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  background-color: #e7e7e7;
+  overflow-y: scroll;
+}
+
+.links-container.active .link-item {
+  /* margin: 2rem auto; */
+  border-bottom: 1px solid #bebebe;
+}
+
+.links-container {
+  position: absolute;
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+  top: -200px;
+  left: 0;
+  right: 0;
+}
+
+.burguer-button-container {
+  display: flex;
+  align-items: center;
+}
+/* .nav-wrapper {
+  position: relative;
+}
+.nav-wrapper.open {
+
+  bottom: 0;
+  background-color: brown;
+} */
+@media (max-width: 576px) {
+  .logo-container span {
+    display: none;
+  }
+}
+@media (min-width: 992px) {
+  .nav-container {
+    grid-template-columns: 2.5fr 7fr 1.5fr 1fr;
+    grid-template-areas: 'logo-container menu-container search-icon-container shop-icons-container';
+  }
+  .burguer-button-container {
+    display: none;
+  }
+  .links-container,
+  .links-container.active {
+    flex-shrink: 2;
+    position: initial;
+    margin: 0;
+    font-size: 1rem;
+    width: initial;
+    height: auto;
+    display: inherit;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .links-container.active .link-item {
+    /* margin: 2rem auto; */
+    padding: 0 !important;
+    border-bottom: none;
+  }
+  .links-container a {
+    display: inline;
+  }
+  .logo-container {
+    justify-content: start;
+  }
+}

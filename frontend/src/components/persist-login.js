@@ -32,7 +32,19 @@ const PersistLogin = () => {
   }, [isLoading]);
 
   return (
-    <>{!persist ? <Outlet /> : isLoading ? <p>Loading....</p> : <Outlet />}</>
+    <>
+      {!persist ? (
+        <Outlet />
+      ) : isLoading ? (
+        <p>
+          <div className="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </p>
+      ) : (
+        <Outlet />
+      )}
+    </>
   );
 };
 

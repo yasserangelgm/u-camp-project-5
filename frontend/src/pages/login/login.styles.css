@@ -1,12 +1,19 @@
-.login-form {
-  display: flex;
-  flex-direction: column;
-  width: 400px;
+.login-form-container {
+  background-color: #f4f4f4;
+}
+.register-form-container {
+  background-color: #fff;
 }
 
-.login-form,
-.login-form input,
-button {
-  margin: 10px 0;
-  font-size: 1.5rem;
+.text-input {
+  border-radius: 0;
+  padding: 1em;
+  outline: none;
+  appearance: none;
+  border: 1px solid #000;
+  margin-top: 1rem;
+  font-size: 14px;
+}
+.text-input:focus {
+  border-color: #1f1f1f;
 }

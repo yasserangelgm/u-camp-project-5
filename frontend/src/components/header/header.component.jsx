@@ -1,16 +1,17 @@
 import './header.styles.css';
 
-import { Link, useNavigate } from 'react-router-dom';
-import useLogout from '../../hooks/useLogout';
+/* import { Link, useNavigate } from 'react-router-dom'; */
+/* import useLogout from '../../hooks/useLogout'; */
 import Container from 'react-bootstrap/Container';
+import NavBar from '../navbar/navbar.component';
 
 export const Header = () => {
-  const navigate = useNavigate();
+  /*  const navigate = useNavigate();
   const logout = useLogout();
   const signOut = async () => {
     await logout();
     navigate('/');
-  };
+  }; */
   return (
     <>
       <Container className="container-fluid announcement">
@@ -20,7 +21,8 @@ export const Header = () => {
           </Container>
         </Container>
       </Container>
-      <header className="main-header">
+      <NavBar />
+      {/* <header className="main-header">
         <nav>
           <ul className="navigation">
             <li>
@@ -43,7 +45,7 @@ export const Header = () => {
             </li>
           </ul>
         </nav>
-      </header>
+      </header> */}
     </>
   );
 };

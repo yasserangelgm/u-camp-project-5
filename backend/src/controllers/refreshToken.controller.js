@@ -33,7 +33,7 @@ const handleRefreshToken = async (req, res) => {
       { id: decoded.id, role: foundUser.role },
       process.env.ACCESS_SECRET,
       {
-        expiresIn: '30s', //TODO: Cambiar duracion en produccion
+        expiresIn: '60s', //TODO: Cambiar duracion en produccion
       }
     );
 

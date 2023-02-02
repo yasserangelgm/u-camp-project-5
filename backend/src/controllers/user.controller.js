@@ -43,7 +43,7 @@ exports.signup = async (req, res) => {
 
 exports.signin = async (req, res) => {
   const { email, password } = req.body;
-
+  console.log(req.body);
   const foundUser = await User.findOne({ email }).exec();
 
   if (!foundUser)
@@ -67,14 +67,14 @@ exports.signin = async (req, res) => {
   };
 
   const accessToken = jwt.sign({ user: userInfo }, process.env.ACCESS_SECRET, {
-    expiresIn: '15s',
+    expiresIn: '60s',
   });
 
   const refreshToken = jwt.sign(
     { id: foundUser._id, role: foundUser.role },
     process.env.REFRESH_SECRET,
     {
-      expiresIn: '60s',
+      expiresIn: '1h',
     }
   );
   foundUser.refresh_token = refreshToken;

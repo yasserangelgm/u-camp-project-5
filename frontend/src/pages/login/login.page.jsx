@@ -21,6 +21,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (e) => {
+    console.log(email, password);
     e.preventDefault();
     try {
       const response = await axios.post(
@@ -67,44 +68,48 @@ const LoginPage = () => {
       <Container className=" py-4">
         <h1 className="py-2 text-center">Tu cuenta</h1>
         <Container className="py-3 login-form-container">
-          <Form className="" onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <h3>Iniciar sesión</h3>
-
-            <Form.Group className="mb-3">
-              {/* <Form.Label>Correo eléctronico</Form.Label> */}
-              <Form.Control
+            <div className="form-group mb-3">
+              <input
                 id="email"
                 type="email"
                 placeholder="Escriba su e-mail"
-                className="shadow-none text-input "
+                className="form-control shadow-none text-input "
+                onChange={(event) => {
+                  setEmail(event.target.value);
+                }}
               />
               <Form.Text className="text-muted">
                 Nunca compartiremos tu correo con nadie más.
               </Form.Text>
-            </Form.Group>
+            </div>
 
-            <Form.Group className="mb-3">
-              {/* <Form.Label>Contraseña</Form.Label> */}
-              <Form.Control
+            <div className="form-group mb-3">
+              <input
                 id="password"
                 type="password"
                 placeholder="Escriba su contraseña"
-                className="shadow-none text-input"
+                className="form-control shadow-none text-input"
               />
-            </Form.Group>
+            </div>
+
             <Button variant="primary" type="submit" className="app-button">
               Iniciar sesión
             </Button>
-            <Form.Group className="mb-3">
-              {/* <Form.Label>Contraseña</Form.Label> */}
-              <Form.Check
-                type="checkbox"
-                label="Recordarme en este dispositivo"
-                id="persist"
-                onClick={togglePersist}
-              />
-            </Form.Group>
-          </Form>
+            <div className="form-group mb-3">
+              <div>
+                <input
+                  type="checkbox"
+                  id="persist"
+                  onClick={togglePersist}
+                ></input>
+                <label className="form-check-label" for="exampleCheck1">
+                  Recordarme en este dispositivo
+                </label>
+              </div>
+            </div>
+          </form>
         </Container>
         <Container className="py-3 register-form-container">
           <Form className="px-4">

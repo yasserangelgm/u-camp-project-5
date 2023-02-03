@@ -121,5 +121,5 @@ exports.logout = async (req, res) => {
   const result = await foundUser.save();
   console.log(result);
   res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None' });
-  return res.status(204).json({ message: `${updateUser.name} cerro sesion` });
+  return res.status(204).json({ message: `${foundUser.name} cerro sesion` });
 };

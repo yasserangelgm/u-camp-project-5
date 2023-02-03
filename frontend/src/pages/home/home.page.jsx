@@ -1,6 +1,5 @@
 import './home.styles.css';
 import { Container } from 'react-bootstrap';
-import useUser from '../../hooks/useUser';
 
 export const HomePage = () => {
   return (

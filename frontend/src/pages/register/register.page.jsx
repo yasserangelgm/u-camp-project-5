@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 import { useState } from 'react';
+import useUser from '../../hooks/useUser';
 import axios from '../../api/axios';
 import './register.styles.css';
 
@@ -12,30 +13,61 @@ function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const { currentUser } = useUser();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!currentUser) {
+      try {
+        const response = await axios.post(
+          '/signup',
+          {
+            name: name,
+            lastname: lastName,
+            email: email,
+            password: password,
+          },
+          {
+            headers: { 'Content-Type': 'application/json' },
+          }
+        );
 
-    try {
-      const response = await axios.post(
-        '/signup',
-        {
-          name: name,
-          lastname: lastName,
-          email: email,
-          password: password,
-        },
-        {
-          headers: { 'Content-Type': 'application/json' },
+        console.log(response.data);
+      } catch (err) {
+        if (!err?.response) {
+          console.log('No hay respuesta del servidor');
+        } else {
+          console.log(err);
         }
-      );
-
-      console.log(response.data);
-    } catch (err) {
-      if (!err?.response) {
-        console.log('No hay respuesta del servisor');
-      } else {
-        console.log(err);
       }
+    } else {
+      setName(currentUser.name);
+      setLastName(currentUser.lastname);
+      setEmail(currentUser.email);
+
+      console.log(name, lastName, email);
+      /* try {
+        const response = await axios.put(
+          '/signup',
+          {
+            name: name,
+            lastname: lastName,
+            email: email,
+            password: password,
+          },
+          {
+            headers: { 'Content-Type': 'application/json' },
+          }
+        );
+
+        console.log(response.data);
+      } catch (err) {
+        if (!err?.response) {
+          console.log('No hay respuesta del servidor');
+        } else {
+          console.log(err);
+        }
+      } */
     }
   };
 
@@ -45,7 +77,7 @@ function RegisterPage() {
         <h1 className="py-2 text-center">Tu cuenta</h1>
         <Container className="py-3 login-form-container">
           <Form className="" onSubmit={handleSubmit}>
-            <h3>Crear cuenta</h3>
+            <h3>{!currentUser ? 'Crear cuenta' : 'Editar cuenta'}</h3>
             <Form.Group className="mb-3">
               {/* <Form.Label>Correo eléctronico</Form.Label> */}
               <Form.Control
@@ -56,6 +88,7 @@ function RegisterPage() {
                 autoComplete="off"
                 required
                 onChange={(e) => setName(e.target.value)}
+                defaultValue={currentUser ? currentUser.name : ''}
               />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -68,6 +101,7 @@ function RegisterPage() {
                 autoComplete="off"
                 required
                 onChange={(e) => setLastName(e.target.value)}
+                defaultValue={currentUser ? currentUser.lastname : ''}
               />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -80,6 +114,7 @@ function RegisterPage() {
                 autoComplete="off"
                 required
                 onChange={(e) => setEmail(e.target.value)}
+                defaultValue={currentUser ? currentUser.email : ''}
               />
             </Form.Group>
 
@@ -93,10 +128,11 @@ function RegisterPage() {
                 autoComplete="off"
                 required
                 onChange={(e) => setPassword(e.target.value)}
+                defaultValue={currentUser ? currentUser.password : ''}
               />
             </Form.Group>
             <Button variant="primary" type="submit" className="app-button">
-              Registrar
+              {!currentUser ? 'Registrar' : 'Guardar cambios'}
             </Button>
           </Form>
         </Container>

@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
 const {
@@ -6,13 +6,15 @@ const {
   signin,
   signup,
   logout,
-} = require("../controllers/user.controller");
+  updateUserById,
+} = require('../controllers/user.controller');
 
-const { verifyToken, isAdmin } = require("../middlewares/authJwt");
+const { verifyToken, isAdmin } = require('../middlewares/authJwt');
 
-router.get("/users", verifyToken, isAdmin, getUsers);
-router.post("/signin", signin);
-router.post("/signup", signup);
-router.get("/logout", logout);
+router.get('/users', verifyToken, isAdmin, getUsers);
+router.post('/signin', signin);
+router.post('/signup', signup);
+router.get('/logout', logout);
+router.put('/users/:userId', verifyToken, updateUserById);
 
 module.exports = router;

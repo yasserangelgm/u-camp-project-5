@@ -123,3 +123,19 @@ exports.logout = async (req, res) => {
   res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None' });
   return res.status(204).json({ message: `${foundUser.name} cerro sesion` });
 };
+
+exports.updateUserById = async (req, res) => {
+  console.log(req.params.userId, req.body);
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.userId,
+      req.body,
+      { new: true }
+    );
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(500).json({
+      msg: 'Hubo un error en la base de datos' + error,
+    });
+  }
+};

@@ -13,6 +13,7 @@ import Users from './components/user/users.component';
 
 import { Routes, Route } from 'react-router-dom';
 import UserProfile from './pages/user-profile/user-profile.page';
+import LogoOut from './components/logout';
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
           <Route path="/signup" element={<RegisterPage />}></Route>
           <Route path="/login" element={<LoginPage />}></Route>
           <Route path="/profile" element={<UserProfile />}></Route>
-          <Route path="/logout" element={<UserProfile />}></Route>
+          <Route path="/logout" element={<LogoOut />}></Route>
           <Route path="/contact" element={<RegisterPage />}></Route>
           <Route path="/products" element={<RegisterPage />}></Route>
           <Route path="/products:productId" element={<RegisterPage />}></Route>

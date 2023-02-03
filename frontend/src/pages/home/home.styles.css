@@ -1,0 +1,24 @@
+.hero {
+  height: 600px;
+}
+.hero-image {
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4) url('/public/assets/store.jpg');
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  background-blend-mode: darken;
+}
+
+.hero-text {
+  height: 100%;
+}
+
+.hero-text h1 {
+  font-family: 'Lora', serif;
+  font-size: 64px;
+  color: #fff;
+  font-weight: 400;
+}

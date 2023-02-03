@@ -5,30 +5,35 @@ import LoginPage from './pages/login/login.page';
 import Root from './components/root/root.component';
 import RootAdmin from './components/root-admin/root-admin.component';
 import { HomePage } from './pages/home/home.page';
-import RequireAuth from './components/require-auth';
 import PersistLogin from './components/persist-login';
+import RequireAuth from './components/require-auth';
 import { Unauthorized } from './pages/unauthorized/unauthorized.page';
 import AdminHomePage from './pages/admin/home/admin-home.page';
 import Users from './components/user/users.component';
 
 import { Routes, Route } from 'react-router-dom';
+import UserProfile from './pages/user-profile/user-profile.page';
 
 function App() {
   return (
     /* Public routes */
-    <Routes>
-      <Route path="/" element={<Root />} errorElement={<ErrorPage />}>
-        <Route index element={<HomePage />}></Route>
-        <Route path="/signup" element={<RegisterPage />}></Route>
-        <Route path="/login" element={<LoginPage />}></Route>
-        <Route path="/contact" element={<RegisterPage />}></Route>
-        <Route path="/products" element={<RegisterPage />}></Route>
-        <Route path="/products:productId" element={<RegisterPage />}></Route>
-        <Route path="unauthorized" element={<Unauthorized />}></Route>
-      </Route>
 
-      {/* Protected routes */}
+    <Routes>
       <Route element={<PersistLogin />}>
+        <Route path="/" element={<Root />} errorElement={<ErrorPage />}>
+          <Route index element={<HomePage />}></Route>
+          <Route path="/signup" element={<RegisterPage />}></Route>
+          <Route path="/login" element={<LoginPage />}></Route>
+          <Route path="/profile" element={<UserProfile />}></Route>
+          <Route path="/logout" element={<UserProfile />}></Route>
+          <Route path="/contact" element={<RegisterPage />}></Route>
+          <Route path="/products" element={<RegisterPage />}></Route>
+          <Route path="/products:productId" element={<RegisterPage />}></Route>
+          <Route path="unauthorized" element={<Unauthorized />}></Route>
+        </Route>
+
+        {/* Protected routes */}
+
         <Route element={<RequireAuth />}>
           <Route
             path="/admin/dashboard"

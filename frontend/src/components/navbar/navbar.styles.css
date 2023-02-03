@@ -1,10 +1,13 @@
 .nav-wrapper {
-  height: 80px;
+  height: 96px;
+  display: flex;
+  align-items: center;
 }
 
 .nav-container {
   max-width: 100%;
   display: grid;
+
   grid-template-columns: 3fr 6fr 1.5fr 1.5fr;
   grid-template-areas: 'shop-icons-container logo-container search-icon-container menu-container';
 }
@@ -22,7 +25,7 @@
 .logo-container span {
   margin-left: 0.6rem;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.95rem;
   text-decoration: none;
 }
 .menu-container {
@@ -42,7 +45,7 @@
 }
 
 .top-logo {
-  width: 40px;
+  width: 35px;
 }
 
 .links-container a {

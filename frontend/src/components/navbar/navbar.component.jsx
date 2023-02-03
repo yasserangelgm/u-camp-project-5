@@ -3,13 +3,16 @@ import BurguerButton from '../burguer-menu/burguer-button.component';
 import Container from 'react-bootstrap/Container';
 import NavLink from 'react-bootstrap/NavLink';
 import { LinkContainer } from 'react-router-bootstrap';
+import useUser from '../../hooks/useUser';
 import { useState } from 'react';
 const NavBar = () => {
+  const { currentUser } = useUser();
   const [clicked, setClicked] = useState(false);
 
   const handleClick = () => {
     setClicked(!clicked);
   };
+
   return (
     <>
       <Container className="container-fluid mw-100 px-0 py-2 nav-wrapper">
@@ -73,13 +76,16 @@ const NavBar = () => {
               <i className="bi bi-search"></i>
             </div>
             <div className="nav-container-item p-2 shop-icons-container">
-              <LinkContainer to="/login">
+              <LinkContainer to={!currentUser ? '/login' : '/profile'}>
                 <NavLink>
                   <i className="bi bi-person-circle fs-5"></i>
                 </NavLink>
               </LinkContainer>
-
-              <i className="bi bi-cart-fill fs-5"></i>
+              <LinkContainer to="/">
+                <NavLink>
+                  <i className="bi bi-cart-fill fs-5"></i>
+                </NavLink>
+              </LinkContainer>
             </div>
           </div>
         </Container>

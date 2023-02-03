@@ -3,13 +3,14 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useEffect, useState } from 'react';
 import useAuth from '../../hooks/useAuth';
+import useUser from '../../hooks/useUser';
 import axios from '../../api/axios';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import './login.styles.css';
 
 const LoginPage = () => {
   const { setAuth, persist, setPersist } = useAuth();
-
+  const { currentUser, setCurrentUser } = useUser();
   const { auth } = useAuth();
 
   const navigate = useNavigate();
@@ -41,8 +42,10 @@ const LoginPage = () => {
       const accessToken = response?.data.accessToken;
       const role = response?.data.user.role;
 
-      console.log(response?.data.user.role);
+      console.log(response?.data.user);
       setAuth({ role, accessToken }); //-------------------> Aqui se setea el accesToken a toda la app
+      setCurrentUser(response?.data.user);
+      console.log('LOGIN', currentUser);
       setEmail('');
       setPassword(''); //TODO Alert success
       console.log(auth);
@@ -65,7 +68,7 @@ const LoginPage = () => {
   }, [persist]);
   return (
     <>
-      <Container className=" py-4">
+      <Container className="py-4">
         <h1 className="py-2 text-center">Tu cuenta</h1>
         <Container className="py-3 px-4 login-form-container">
           <form onSubmit={handleSubmit}>

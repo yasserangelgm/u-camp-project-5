@@ -5,7 +5,7 @@ require('dotenv').config();
 exports.verifyToken = async (req, res, next) => {
   const authHeader =
     req.headers['authorization'] || req.headers['Authorization'];
-  console.log(authHeader);
+
   if (!authHeader?.startsWith('Bearer '))
     return res.status(401).json({ error: 'No ha proporcionado un token' });
 
@@ -16,7 +16,7 @@ exports.verifyToken = async (req, res, next) => {
 
     req.userId = decoded.id;
     req.role = decoded.role;
-    console.log(`VERIFY TOKEN: ${decoded.role}`);
+
     next();
   });
 };

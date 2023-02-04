@@ -22,7 +22,6 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (e) => {
-    console.log(email, password);
     e.preventDefault();
     try {
       const response = await axios.post(
@@ -42,13 +41,12 @@ const LoginPage = () => {
       const accessToken = response?.data.accessToken;
       const role = response?.data.user.role;
 
-      console.log(response?.data.user);
       setAuth({ role, accessToken }); //-------------------> Aqui se setea el accesToken a toda la app
       setCurrentUser(response?.data.user);
-      console.log('LOGIN', currentUser);
+
       setEmail('');
       setPassword(''); //TODO Alert success
-      console.log(auth);
+
       navigate(from, { replace: true });
     } catch (err) {
       if (err?.response) {

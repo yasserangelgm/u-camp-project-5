@@ -43,7 +43,7 @@ exports.signup = async (req, res) => {
 
 exports.signin = async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body);
+
   const foundUser = await User.findOne({ email }).exec();
 
   if (!foundUser)
@@ -96,10 +96,6 @@ exports.signin = async (req, res) => {
     maxAge: 24 * 60 * 60 * 1000,
   });
 
-  /* console.log(accessToken);
-  console.log(userInfo);
-  console.log(updatedUserInfo); */
-
   return res.status(200).json({ accessToken, user: updatedUserInfo });
 };
 
@@ -125,7 +121,6 @@ exports.logout = async (req, res) => {
 };
 
 exports.updateUserById = async (req, res) => {
-  console.log(req.body);
   try {
     const updatedUser = await User.findByIdAndUpdate(
       req.params.userId,
@@ -141,7 +136,7 @@ exports.updateUserById = async (req, res) => {
       role: updatedUser.role,
       refreshToken: updatedUser.refresh_token,
     };
-    console.log(responseUser);
+
     res.status(200).json(responseUser);
   } catch (error) {
     res.status(500).json({

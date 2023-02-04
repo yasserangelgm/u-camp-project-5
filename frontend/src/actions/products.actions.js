@@ -7,14 +7,14 @@ export const getProducts = () => async (dispatch) => {
 
   try {
     const response = await axios.get('/product/');
-    console.log(response);
+
     dispatch({
       type: 'LOADING_SUCCESS',
       payload: response.data,
     });
   } catch (error) {
     dispatch({
-      type: 'PRODUCT_ERROR',
+      type: 'LOADING_ERROR',
       payload: error.response.data,
     });
     console.log(error);

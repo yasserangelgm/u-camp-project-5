@@ -16,7 +16,7 @@ export const HomePage = () => {
           </Container>
         </Container>
       </Container>
-      <ProductList />
+      <ProductList adminMode={false} />
     </main>
   );
 };

@@ -20,7 +20,7 @@ const handleLogout = async (req, res) => {
 
   foundUser.refresh_token = '';
   const result = await foundUser.save();
-  console.log(result);
+
   res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None' });
   return res.status(204).json({ message: `${foundUser.name} cerro sesion` });
 };

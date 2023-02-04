@@ -35,8 +35,6 @@ function RegisterPage() {
             headers: { 'Content-Type': 'application/json' },
           }
         );
-
-        console.log(response.data);
       } catch (err) {
         if (!err?.response) {
           console.log('No hay respuesta del servidor');
@@ -45,8 +43,6 @@ function RegisterPage() {
         }
       }
     } else {
-      console.log(currentUser);
-
       try {
         const response = await axiosPrivate.put(
           `/users/${currentUser.id}`,

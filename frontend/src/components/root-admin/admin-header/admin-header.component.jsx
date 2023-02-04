@@ -4,25 +4,32 @@ import { Link } from 'react-router-dom';
 export const AdminHeader = () => {
   return (
     <>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/admin/dashboard/products">Products</Link>
-          </li>
-          <li>
-            <Link to="/admin/dashboard/categories">Categorias</Link>
-          </li>
-          <li>
-            <Link to="/admin/dashboard/users">Usuarios</Link>
-          </li>
-          <li>
-            <Link to="/logout">Cerrar sesion</Link>
-          </li>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-        </ul>
-      </nav>
+      <header className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        <Link className="navbar-brand col-md-3 col-lg-2 me-0 px-3" to="/">
+          Company name
+        </Link>
+        <button
+          className="navbar-toggler position-absolute d-md-none collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#sidebarMenu"
+          aria-controls="sidebarMenu"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
+        <div className="navbar-nav">
+          <div className="nav-item text-nowrap">
+            <Link className="nav-link px-3" to="/logout">
+              Sign out
+            </Link>
+          </div>
+        </div>
+      </header>
     </>
   );
 };
+
+export default AdminHeader;

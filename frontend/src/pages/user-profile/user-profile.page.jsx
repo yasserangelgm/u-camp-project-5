@@ -29,6 +29,11 @@ const UserProfile = () => {
         >
           Editar cuenta
         </Button>
+        <Container className="pt-5 px-0">
+          {currentUser.role === 1 && (
+            <Link to="/admin/dashboard">Panel de administrador</Link>
+          )}
+        </Container>
       </Container>
     </Container>
   );

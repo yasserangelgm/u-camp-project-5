@@ -19,7 +19,7 @@ const handleRefreshToken = async (req, res) => {
     if (err !== null || foundUser._id != decoded.id) {
       return res.status(403).json({ error: 'Token no válido' });
     }
-    console.log(`DECODED: ${JSON.stringify(decoded)}`);
+
     const userInfo = {
       id: foundUser._id,
       name: foundUser.name,

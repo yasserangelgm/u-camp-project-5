@@ -14,6 +14,8 @@ import Users from './components/user/users.component';
 import { Routes, Route } from 'react-router-dom';
 import UserProfile from './pages/user-profile/user-profile.page';
 import LogoOut from './components/logout';
+import ProductList from './components/product-list/product-list.component';
+import AdminProducts from './pages/admin/products/admin-products.page';
 
 function App() {
   return (
@@ -44,7 +46,7 @@ function App() {
             <Route index element={<AdminHomePage />}></Route>
             <Route
               path="/admin/dashboard/products"
-              element={<RegisterPage />}
+              element={<AdminProducts />}
             ></Route>
             <Route
               path="/admin/dashboard/categories"

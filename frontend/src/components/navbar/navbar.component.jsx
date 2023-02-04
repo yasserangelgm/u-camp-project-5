@@ -13,8 +13,6 @@ const NavBar = () => {
     setClicked(!clicked);
   };
 
-  console.log(currentUser);
-  console.log(!currentUser);
   return (
     <>
       <Container className="container-fluid mw-100 px-0 py-2 nav-wrapper">

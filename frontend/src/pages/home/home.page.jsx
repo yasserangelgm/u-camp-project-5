@@ -1,5 +1,6 @@
 import './home.styles.css';
 import { Container } from 'react-bootstrap';
+import ProductList from '../../components/product-list/product-list.component';
 
 export const HomePage = () => {
   return (
@@ -15,6 +16,7 @@ export const HomePage = () => {
           </Container>
         </Container>
       </Container>
+      <ProductList />
     </main>
   );
 };

@@ -3,8 +3,10 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 import { useState } from 'react';
+import useAuth from '../../hooks/useAuth';
 import useUser from '../../hooks/useUser';
 import axios from '../../api/axios';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import './register.styles.css';
 
 function RegisterPage() {
@@ -13,7 +15,9 @@ function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { currentUser } = useUser();
+  const { currentUser, setCurrentUser } = useUser();
+  const { auth } = useAuth();
+  const axiosPrivate = useAxiosPrivate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,33 +45,33 @@ function RegisterPage() {
         }
       }
     } else {
-      setName(currentUser.name);
-      setLastName(currentUser.lastname);
-      setEmail(currentUser.email);
+      console.log(currentUser);
 
-      console.log(name, lastName, email);
-      /* try {
-        const response = await axios.put(
-          '/signup',
+      try {
+        const response = await axiosPrivate.put(
+          `/users/${currentUser.id}`,
           {
-            name: name,
-            lastname: lastName,
-            email: email,
+            id: currentUser.id,
+            name: name === '' ? currentUser.name : name,
+            lastname: lastName === '' ? currentUser.lastname : lastName,
+            email: email === '' ? currentUser.email : email,
             password: password,
           },
           {
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${auth.accessToken}`,
+            },
           }
         );
-
-        console.log(response.data);
+        setCurrentUser(response.data);
       } catch (err) {
         if (!err?.response) {
           console.log('No hay respuesta del servidor');
         } else {
           console.log(err);
         }
-      } */
+      }
     }
   };
 

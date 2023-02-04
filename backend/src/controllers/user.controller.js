@@ -125,14 +125,24 @@ exports.logout = async (req, res) => {
 };
 
 exports.updateUserById = async (req, res) => {
-  console.log(req.params.userId, req.body);
+  console.log(req.body);
   try {
     const updatedUser = await User.findByIdAndUpdate(
       req.params.userId,
       req.body,
       { new: true }
     );
-    res.status(200).json(updatedUser);
+
+    responseUser = {
+      id: updatedUser._id,
+      name: updatedUser.name,
+      lastname: updatedUser.lastname,
+      email: updatedUser.email,
+      role: updatedUser.role,
+      refreshToken: updatedUser.refresh_token,
+    };
+    console.log(responseUser);
+    res.status(200).json(responseUser);
   } catch (error) {
     res.status(500).json({
       msg: 'Hubo un error en la base de datos' + error,

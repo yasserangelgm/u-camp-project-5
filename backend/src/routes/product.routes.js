@@ -9,7 +9,7 @@ const {
   deleteProductById,
 } = require('../controllers/product.controller');
 
-const { verifyToken, isAdmin } = require('../middlewares/authJwt');
+const { verifyToken, isAdmin } = require('../middlewares/authJWT');
 
 router.get('/', getProducts);
 router.post('/', [verifyToken, isAdmin], createProduct);

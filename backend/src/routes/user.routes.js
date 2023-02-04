@@ -9,7 +9,7 @@ const {
   updateUserById,
 } = require('../controllers/user.controller');
 
-const { verifyToken, isAdmin } = require('../middlewares/authJwt');
+const { verifyToken, isAdmin } = require('../middlewares/authJWT');
 
 router.get('/users', verifyToken, isAdmin, getUsers);
 router.post('/signin', signin);

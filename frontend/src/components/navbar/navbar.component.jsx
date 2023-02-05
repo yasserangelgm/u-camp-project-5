@@ -22,7 +22,7 @@ const NavBar = () => {
               <LinkContainer to="/">
                 <NavLink>
                   <img
-                    src="../assets/logo-su.jpg"
+                    src="./public/assets/store.jpg"
                     alt="Logotipo SU: Casa de arte popular y diseño"
                     className="top-logo"
                   />

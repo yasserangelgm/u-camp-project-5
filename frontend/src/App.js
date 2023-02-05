@@ -23,38 +23,16 @@ function App() {
     <BrowserRouter basename="/u-camp-project-5">
       <Routes>
         <Route element={<PersistLogin />}>
-          <Route
-            path="/u-camp-project-5"
-            element={<Root />}
-            errorElement={<ErrorPage />}
-          >
+          <Route path="/" element={<Root />} errorElement={<ErrorPage />}>
             <Route index element={<HomePage />}></Route>
+            <Route path="/signup" element={<RegisterPage />}></Route>
+            <Route path="/login" element={<LoginPage />}></Route>
+            <Route path="/profile" element={<UserProfile />}></Route>
+            <Route path="/logout" element={<LogoOut />}></Route>
+            <Route path="/contact" element={<RegisterPage />}></Route>
+            <Route path="/products" element={<RegisterPage />}></Route>
             <Route
-              path="/u-camp-project-5/signup"
-              element={<RegisterPage />}
-            ></Route>
-            <Route
-              path="/u-camp-project-5/login"
-              element={<LoginPage />}
-            ></Route>
-            <Route
-              path="/u-camp-project-5/profile"
-              element={<UserProfile />}
-            ></Route>
-            <Route
-              path="/u-camp-project-5/logout"
-              element={<LogoOut />}
-            ></Route>
-            <Route
-              path="/u-camp-project-5/contact"
-              element={<RegisterPage />}
-            ></Route>
-            <Route
-              path="/u-camp-project-5/products"
-              element={<RegisterPage />}
-            ></Route>
-            <Route
-              path="/u-camp-project-5/products:productId"
+              path="/products:productId"
               element={<RegisterPage />}
             ></Route>
             <Route path="unauthorized" element={<Unauthorized />}></Route>

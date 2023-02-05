@@ -20,7 +20,7 @@ import AdminProducts from './pages/admin/products/admin-products.page';
 function App() {
   return (
     /* Public routes */
-    <BrowserRouter>
+    <BrowserRouter basename="/u-camp-project-5">
       <Routes>
         <Route element={<PersistLogin />}>
           <Route
@@ -54,7 +54,7 @@ function App() {
               element={<RegisterPage />}
             ></Route>
             <Route
-              path="/u-camp-project-5     /products:productId"
+              path="/u-camp-project-5/products:productId"
               element={<RegisterPage />}
             ></Route>
             <Route path="unauthorized" element={<Unauthorized />}></Route>

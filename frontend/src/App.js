@@ -11,7 +11,7 @@ import { Unauthorized } from './pages/unauthorized/unauthorized.page';
 import AdminHomePage from './pages/admin/home/admin-home.page';
 import Users from './components/user/users.component';
 
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import UserProfile from './pages/user-profile/user-profile.page';
 import LogoOut from './components/logout';
 import ProductList from './components/product-list/product-list.component';
@@ -20,44 +20,70 @@ import AdminProducts from './pages/admin/products/admin-products.page';
 function App() {
   return (
     /* Public routes */
-
-    <Routes>
-      <Route element={<PersistLogin />}>
-        <Route path="/" element={<Root />} errorElement={<ErrorPage />}>
-          <Route index element={<HomePage />}></Route>
-          <Route path="/signup" element={<RegisterPage />}></Route>
-          <Route path="/login" element={<LoginPage />}></Route>
-          <Route path="/profile" element={<UserProfile />}></Route>
-          <Route path="/logout" element={<LogoOut />}></Route>
-          <Route path="/contact" element={<RegisterPage />}></Route>
-          <Route path="/products" element={<RegisterPage />}></Route>
-          <Route path="/products:productId" element={<RegisterPage />}></Route>
-          <Route path="unauthorized" element={<Unauthorized />}></Route>
-        </Route>
-
-        {/* Protected routes */}
-
-        <Route element={<RequireAuth />}>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<PersistLogin />}>
           <Route
-            path="/admin/dashboard"
-            element={<RootAdmin />}
+            path="/u-camp-project-5"
+            element={<Root />}
             errorElement={<ErrorPage />}
           >
-            <Route index element={<AdminHomePage />}></Route>
+            <Route index element={<HomePage />}></Route>
             <Route
-              path="/admin/dashboard/products"
-              element={<AdminProducts />}
+              path="/u-camp-project-5/signup"
+              element={<RegisterPage />}
             ></Route>
             <Route
-              path="/admin/dashboard/categories"
+              path="/u-camp-project-5/login"
               element={<LoginPage />}
             ></Route>
-            <Route path="/admin/dashboard/users" element={<Users />}></Route>
+            <Route
+              path="/u-camp-project-5/profile"
+              element={<UserProfile />}
+            ></Route>
+            <Route
+              path="/u-camp-project-5/logout"
+              element={<LogoOut />}
+            ></Route>
+            <Route
+              path="/u-camp-project-5/contact"
+              element={<RegisterPage />}
+            ></Route>
+            <Route
+              path="/u-camp-project-5/products"
+              element={<RegisterPage />}
+            ></Route>
+            <Route
+              path="/u-camp-project-5     /products:productId"
+              element={<RegisterPage />}
+            ></Route>
+            <Route path="unauthorized" element={<Unauthorized />}></Route>
+          </Route>
+
+          {/* Protected routes */}
+
+          <Route element={<RequireAuth />}>
+            <Route
+              path="/admin/dashboard"
+              element={<RootAdmin />}
+              errorElement={<ErrorPage />}
+            >
+              <Route index element={<AdminHomePage />}></Route>
+              <Route
+                path="/admin/dashboard/products"
+                element={<AdminProducts />}
+              ></Route>
+              <Route
+                path="/admin/dashboard/categories"
+                element={<LoginPage />}
+              ></Route>
+              <Route path="/admin/dashboard/users" element={<Users />}></Route>
+            </Route>
           </Route>
         </Route>
-      </Route>
-      <Route path="*" element={<ErrorPage />}></Route>
-    </Routes>
+        <Route path="*" element={<ErrorPage />}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

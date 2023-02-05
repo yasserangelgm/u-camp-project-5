@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const DEV = true;
+const DEV = false;
 
 const BASE_URL = DEV
   ? process.env.REACT_APP_DEV_BASE_URL

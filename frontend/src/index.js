@@ -10,14 +10,12 @@ import { ProductProvider } from './context/productProvider';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
-        <UserProvider>
-          <ProductProvider>
-            <App />
-          </ProductProvider>
-        </UserProvider>
-      </AuthProvider>
-    </BrowserRouter>
+    <AuthProvider>
+      <UserProvider>
+        <ProductProvider>
+          <App />
+        </ProductProvider>
+      </UserProvider>
+    </AuthProvider>
   </React.StrictMode>
 );

@@ -10,16 +10,16 @@ export default axios.create({
   baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': 'https://su-store.netlify.app/',
+    'Access-Control-Allow-Credentials': true,
   },
-  withCredentials: true,
 });
 
 export const axiosPrivate = axios.create({
   baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': 'https://su-store.netlify.app/',
+    'Access-Control-Allow-Credentials': true,
   },
-  withCredentials: true,
 });

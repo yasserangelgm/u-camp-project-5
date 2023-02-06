@@ -18,7 +18,7 @@ const corsOptions = require('./config/cors-options');
 require('dotenv').config();
 
 app.use(credentials);
-app.use(cors(corsOptions));
+app.use(cors({ origin: 'https://su-store.netlify.app/' }));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());

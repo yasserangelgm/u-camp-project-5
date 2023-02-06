@@ -10,17 +10,15 @@ import RequireAuth from './components/require-auth';
 import { Unauthorized } from './pages/unauthorized/unauthorized.page';
 import AdminHomePage from './pages/admin/home/admin-home.page';
 import Users from './components/user/users.component';
-
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import UserProfile from './pages/user-profile/user-profile.page';
 import LogoOut from './components/logout';
-import ProductList from './components/product-list/product-list.component';
 import AdminProducts from './pages/admin/products/admin-products.page';
 
 function App() {
   return (
     /* Public routes */
-    <BrowserRouter basename="/u-camp-project-5">
+    <BrowserRouter basename="/">
       <Routes>
         <Route element={<PersistLogin />}>
           <Route path="/" element={<Root />} errorElement={<ErrorPage />}>

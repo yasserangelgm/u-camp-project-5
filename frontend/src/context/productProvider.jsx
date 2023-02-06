@@ -1,6 +1,5 @@
 import { createContext, useReducer } from 'react';
 /* import axios from '../../api/axios'; */
-import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import productInitialState from '../initialStates/productInitialState';
 import productReducer from '../reducers/product.reducer';
 

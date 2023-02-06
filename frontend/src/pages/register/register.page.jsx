@@ -23,7 +23,7 @@ function RegisterPage() {
     e.preventDefault();
     if (!currentUser) {
       try {
-        const response = await axios.post(
+        await axios.post(
           '/signup',
           {
             name: name,

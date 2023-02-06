@@ -10,8 +10,7 @@ import './login.styles.css';
 
 const LoginPage = () => {
   const { setAuth, persist, setPersist } = useAuth();
-  const { currentUser, setCurrentUser } = useUser();
-  const { auth } = useAuth();
+  const { setCurrentUser } = useUser();
 
   const navigate = useNavigate();
   const location = useLocation();

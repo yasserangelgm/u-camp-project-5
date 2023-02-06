@@ -1,7 +1,7 @@
 import useProduct from '../../hooks/useProduct';
 import { useEffect } from 'react';
 import { getProducts } from '../../actions/products.actions';
-import { Button, Container } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 
 const ProductList = ({ adminMode }) => {
   const {
@@ -23,7 +23,7 @@ const ProductList = ({ adminMode }) => {
           <Container className="container-sm mw-100 px-0">
             <div className="row row-cols-1 row-cols-md-4 g-4">
               {products?.data?.products?.map((item) => (
-                <div className="col col-6" key={item.id}>
+                <div className="col col-6" key={item._id}>
                   <div className="card h-100">
                     <img
                       src={item.imgURL}

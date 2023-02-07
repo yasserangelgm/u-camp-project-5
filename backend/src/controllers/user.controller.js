@@ -1,7 +1,7 @@
-const bcryptjs = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const User = require('../models/user.model');
-require('dotenv').config();
+const bcryptjs = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const User = require("../models/user.model");
+require("dotenv").config();
 
 exports.getUsers = async (req, res) => {
   try {
@@ -30,7 +30,7 @@ exports.signup = async (req, res) => {
 
     //Es necesario??????? crear jwt al crear usuario?????????
     const token = jwt.sign({ id: savedUser._id }, process.env.ACCESS_SECRET, {
-      expiresIn: '1200s',
+      expiresIn: "1200s",
     });
 
     const payload = { token, user: { id: savedUser._id } };
@@ -48,7 +48,7 @@ exports.signin = async (req, res) => {
 
   if (!foundUser)
     return res.status(401).json({
-      error: 'El usuario o email no existen',
+      error: "El usuario o email no existen",
     });
 
   const matchPassword = await bcryptjs.compare(
@@ -59,7 +59,7 @@ exports.signin = async (req, res) => {
   if (!matchPassword)
     return res
       .status(401)
-      .json({ error: 'El usuario y la contraseña no coinciden' });
+      .json({ error: "El usuario y la contraseña no coinciden" });
 
   const userInfo = {
     id: foundUser._id,
@@ -67,57 +67,20 @@ exports.signin = async (req, res) => {
   };
 
   const accessToken = jwt.sign({ user: userInfo }, process.env.ACCESS_SECRET, {
-    expiresIn: '60s',
+    expiresIn: "15m",
   });
 
-  const refreshToken = jwt.sign(
-    { id: foundUser._id, role: foundUser.role },
-    process.env.REFRESH_SECRET,
-    {
-      expiresIn: '1h',
-    }
-  );
-  foundUser.refresh_token = refreshToken;
-  const result = await foundUser.save();
+  await foundUser.save();
 
-  const updatedUserInfo = {
+  const responseUserInfo = {
     id: foundUser._id,
     name: foundUser.name,
     lastname: foundUser.lastname,
     email: foundUser.email,
-    refreshToken: foundUser.refresh_token,
     role: foundUser.role,
   };
 
-  res.cookie('jwt', refreshToken, {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'None',
-    maxAge: 24 * 60 * 60 * 1000,
-  });
-
-  return res.status(200).json({ accessToken, user: updatedUserInfo });
-};
-
-exports.logout = async (req, res) => {
-  //En el cliente borrar el accessToken
-  const cookies = req.cookies;
-  if (!cookies?.jwt) return res.sendStatus(204); //No hay cookie
-
-  const refresh_token = cookies.jwt;
-
-  const foundUser = await User.findOne({ refresh_token }).exec();
-
-  if (!foundUser) {
-    res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
-    return res.sendStatus(204);
-  }
-
-  foundUser.refresh_token = '';
-  const result = await foundUser.save();
-  console.log(result);
-  res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None' });
-  return res.status(204).json({ message: `${foundUser.name} cerro sesion` });
+  return res.status(200).json({ accessToken, user: responseUserInfo });
 };
 
 exports.updateUserById = async (req, res) => {
@@ -134,13 +97,12 @@ exports.updateUserById = async (req, res) => {
       lastname: updatedUser.lastname,
       email: updatedUser.email,
       role: updatedUser.role,
-      refreshToken: updatedUser.refresh_token,
     };
 
     res.status(200).json(responseUser);
   } catch (error) {
     res.status(500).json({
-      msg: 'Hubo un error en la base de datos' + error,
+      msg: "Hubo un error en la base de datos" + error,
     });
   }
 };

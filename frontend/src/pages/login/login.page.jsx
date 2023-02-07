@@ -1,12 +1,12 @@
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import { useEffect, useState } from 'react';
-import useAuth from '../../hooks/useAuth';
-import useUser from '../../hooks/useUser';
-import axios from '../../api/axios';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import './login.styles.css';
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import { useEffect, useState } from "react";
+import useAuth from "../../hooks/useAuth";
+import useUser from "../../hooks/useUser";
+import axios from "../../api/axios";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import "./login.styles.css";
 
 const LoginPage = () => {
   const { setAuth, persist, setPersist } = useAuth();
@@ -15,25 +15,24 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location.state?.from?.pathname || '/';
+  const from = location.state?.from?.pathname || "/";
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        '/signin',
+        "/signin",
         {
           email: email,
           password: password,
         },
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
-          withCredentials: true,
         }
       );
 
@@ -43,13 +42,13 @@ const LoginPage = () => {
       setAuth({ role, accessToken }); //-------------------> Aqui se setea el accesToken a toda la app
       setCurrentUser(response?.data.user);
 
-      setEmail('');
-      setPassword(''); //TODO Alert success
+      setEmail("");
+      setPassword(""); //TODO Alert success
 
       navigate(from, { replace: true });
     } catch (err) {
       if (err?.response) {
-        console.log('No hay respuesta del servidor'); //TODO manejar los distintos tipos de errores
+        console.log("No hay respuesta del servidor"); //TODO manejar los distintos tipos de errores
       } else {
         console.log(err);
       }
@@ -61,7 +60,7 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
-    localStorage.setItem('persist', persist);
+    localStorage.setItem("persist", persist);
   }, [persist]);
   return (
     <>

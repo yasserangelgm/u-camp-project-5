@@ -4,12 +4,13 @@ import Button from "react-bootstrap/Button";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import useUser from "../../hooks/useUser";
+import { signin } from "../../context/actions/auth.actions";
 import axios from "../../api/axios";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./login.styles.css";
 
-const LoginPage = () => {
-  const { setAuth, persist, setPersist } = useAuth();
+const LoginPage = ({ form: { onChange, form } }) => {
+  const { authState, authDispatch, persist, setPersist } = useAuth();
   const { setCurrentUser } = useUser();
 
   const navigate = useNavigate();
@@ -17,42 +18,9 @@ const LoginPage = () => {
 
   const from = location.state?.from?.pathname || "/";
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(
-        "/signin",
-        {
-          email: email,
-          password: password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      const accessToken = response?.data.accessToken;
-      const role = response?.data.user.role;
-
-      setAuth({ role, accessToken }); //-------------------> Aqui se setea el accesToken a toda la app
-      setCurrentUser(response?.data.user);
-
-      setEmail("");
-      setPassword(""); //TODO Alert success
-
-      navigate(from, { replace: true });
-    } catch (err) {
-      if (err?.response) {
-        console.log("No hay respuesta del servidor"); //TODO manejar los distintos tipos de errores
-      } else {
-        console.log(err);
-      }
-    }
+    signin(form)(authDispatch);
   };
 
   const togglePersist = () => {
@@ -72,10 +40,12 @@ const LoginPage = () => {
             <div className="form-group mb-3">
               <input
                 id="email"
+                name="email"
                 type="email"
                 placeholder="Escriba su e-mail"
                 className="form-control"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={onChange}
+                value={form.email || ""}
               />
               <Form.Text className="text-muted">
                 Nunca compartiremos tu correo con nadie más.
@@ -85,20 +55,22 @@ const LoginPage = () => {
             <div className="form-group mb-3">
               <input
                 id="password"
+                name="password"
                 type="password"
                 placeholder="Escriba su contraseña"
                 className="form-control shadow-none text-input"
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={onChange}
+                value={form.password || ""}
               />
             </div>
 
-            <Button
+            <button
               variant="ligth"
               type="submit"
-              className="app-button bg-light border border-secondary"
+              className="btn btn-primary app-button"
             >
               Iniciar sesión
-            </Button>
+            </button>
             <div className="form-group mb-3">
               <div>
                 <input

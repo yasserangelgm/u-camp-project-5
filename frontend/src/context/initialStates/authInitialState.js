@@ -1,7 +1,7 @@
 const authInitialState = {
   auth: {
     inProgress: false,
-    user: null,
+    data: null,
     error: null,
   },
 };

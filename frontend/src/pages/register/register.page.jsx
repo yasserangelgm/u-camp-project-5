@@ -1,28 +1,28 @@
-import Container from 'react-bootstrap/Container';
-import useAuth from '../../hooks/useAuth';
-import useUser from '../../hooks/useUser';
-import useAxiosPrivate from '../../hooks/useAxiosPrivate';
-import { signup } from '../../context/actions/auth.actions';
-import './register.styles.css';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import Container from "react-bootstrap/Container";
+import useAuth from "../../hooks/useAuth";
+import useUser from "../../hooks/useUser";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { signup } from "../../context/actions/auth.actions";
+import "./register.styles.css";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = ({ form: { onChange, form } }) => {
   const { currentUser, setCurrentUser } = useUser();
   const navigate = useNavigate();
   const {
     authState: {
-      auth: { user },
+      auth: { data },
     },
     authDispatch,
   } = useAuth();
 
   useEffect(() => {
-    console.log(user);
-    if (user) {
-      navigate('/login', { replace: true });
+    console.log(data);
+    if (data) {
+      navigate("/login", { replace: true });
     }
-  }, [user]);
+  }, [data]);
 
   const handleSubmit = async (e) => {
     //TODO Validate inputs with REGEX? or library
@@ -65,7 +65,7 @@ const RegisterPage = ({ form: { onChange, form } }) => {
         <h1 className="py-2 text-center">Tu cuenta</h1>
         <Container className="py-3 login-form-container">
           <form onSubmit={handleSubmit}>
-            <h3>{!currentUser ? 'Crear cuenta' : 'Editar cuenta'}</h3>
+            <h3>{!currentUser ? "Crear cuenta" : "Editar cuenta"}</h3>
             <div className="mb-3">
               {/* <Form.Label>Correo eléctronico</Form.Label> */}
               <input
@@ -77,7 +77,7 @@ const RegisterPage = ({ form: { onChange, form } }) => {
                 autoComplete="off"
                 required
                 onChange={onChange}
-                value={form.name || ''}
+                value={form.name || ""}
               />
             </div>
             <div className="mb-3">
@@ -91,7 +91,7 @@ const RegisterPage = ({ form: { onChange, form } }) => {
                 autoComplete="off"
                 required
                 onChange={onChange}
-                value={form.lastname || ''}
+                value={form.lastname || ""}
               />
             </div>
             <div className="mb-3">
@@ -105,7 +105,7 @@ const RegisterPage = ({ form: { onChange, form } }) => {
                 autoComplete="off"
                 required
                 onChange={onChange}
-                value={form.email || ''}
+                value={form.email || ""}
               />
             </div>
 
@@ -120,7 +120,7 @@ const RegisterPage = ({ form: { onChange, form } }) => {
                 autoComplete="off"
                 required
                 onChange={onChange}
-                value={form.password || ''}
+                value={form.password || ""}
               />
             </div>
             <button
@@ -128,7 +128,7 @@ const RegisterPage = ({ form: { onChange, form } }) => {
               type="submit"
               className="btn btn-primary app-button"
             >
-              {!currentUser ? 'Registrar' : 'Guardar cambios'}
+              {!currentUser ? "Registrar" : "Guardar cambios"}
             </button>
           </form>
         </Container>

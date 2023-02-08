@@ -4,7 +4,6 @@ export const getProducts = () => async (dispatch) => {
   dispatch({
     type: 'LOADING_PRODUCTS',
   });
-
   try {
     const response = await axios.get('/product/');
 

@@ -1,6 +1,6 @@
 const authInitialState = {
   auth: {
-    loading: false,
+    inProgress: false,
     user: null,
     error: null,
   },

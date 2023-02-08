@@ -1,48 +1,36 @@
 import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-
-import { useState } from 'react';
 import useAuth from '../../hooks/useAuth';
 import useUser from '../../hooks/useUser';
-import axios from '../../api/axios';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import { signup } from '../../context/actions/auth.actions';
 import './register.styles.css';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function RegisterPage() {
-  const [name, setName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
+const RegisterPage = ({ form: { onChange, form } }) => {
   const { currentUser, setCurrentUser } = useUser();
-  const { auth } = useAuth();
-  const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
+  const {
+    authState: {
+      auth: { user },
+    },
+    authDispatch,
+  } = useAuth();
+
+  useEffect(() => {
+    console.log(user);
+    if (user) {
+      navigate('/login', { replace: true });
+    }
+  }, [user]);
 
   const handleSubmit = async (e) => {
+    //TODO Validate inputs with REGEX? or library
+
     e.preventDefault();
     if (!currentUser) {
-      try {
-        await axios.post(
-          '/signup',
-          {
-            name: name,
-            lastname: lastName,
-            email: email,
-            password: password,
-          },
-          {
-            headers: { 'Content-Type': 'application/json' },
-          }
-        );
-      } catch (err) {
-        if (!err?.response) {
-          console.log('No hay respuesta del servidor');
-        } else {
-          console.log(err);
-        }
-      }
-    } else {
+      signup(form)(authDispatch);
+    } /* else {
       try {
         const response = await axiosPrivate.put(
           `/users/${currentUser.id}`,
@@ -68,7 +56,7 @@ function RegisterPage() {
           console.log(err);
         }
       }
-    }
+    } */
   };
 
   return (
@@ -76,69 +64,77 @@ function RegisterPage() {
       <Container className=" py-4">
         <h1 className="py-2 text-center">Tu cuenta</h1>
         <Container className="py-3 login-form-container">
-          <Form className="" onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <h3>{!currentUser ? 'Crear cuenta' : 'Editar cuenta'}</h3>
-            <Form.Group className="mb-3">
+            <div className="mb-3">
               {/* <Form.Label>Correo eléctronico</Form.Label> */}
-              <Form.Control
+              <input
                 type="text"
                 placeholder="Escriba su nombre"
-                className="shadow-none text-input "
+                className="form-control shadow-none text-input "
                 id="name"
+                name="name"
                 autoComplete="off"
                 required
-                onChange={(e) => setName(e.target.value)}
-                defaultValue={currentUser ? currentUser.name : ''}
+                onChange={onChange}
+                value={form.name || ''}
               />
-            </Form.Group>
-            <Form.Group className="mb-3">
+            </div>
+            <div className="mb-3">
               {/* <Form.Label>Correo eléctronico</Form.Label> */}
-              <Form.Control
+              <input
                 type="text"
                 placeholder="Escriba su apellido"
-                className="shadow-none text-input "
+                className="form-control shadow-none text-input "
                 id="lastname"
+                name="lastname"
                 autoComplete="off"
                 required
-                onChange={(e) => setLastName(e.target.value)}
-                defaultValue={currentUser ? currentUser.lastname : ''}
+                onChange={onChange}
+                value={form.lastname || ''}
               />
-            </Form.Group>
-            <Form.Group className="mb-3">
+            </div>
+            <div className="mb-3">
               {/* <Form.Label>Correo eléctronico</Form.Label> */}
-              <Form.Control
+              <input
                 type="email"
                 placeholder="Escriba su e-mail"
-                className="shadow-none text-input "
+                className="form-control shadow-none text-input "
                 id="email"
+                name="email"
                 autoComplete="off"
                 required
-                onChange={(e) => setEmail(e.target.value)}
-                defaultValue={currentUser ? currentUser.email : ''}
+                onChange={onChange}
+                value={form.email || ''}
               />
-            </Form.Group>
+            </div>
 
-            <Form.Group className="mb-3">
+            <div className="mb-3">
               {/* <Form.Label>Contraseña</Form.Label> */}
-              <Form.Control
+              <input
                 type="password"
                 placeholder="Escriba una contraseña"
-                className="shadow-none text-input"
+                className="form-control shadow-none text-input"
                 id="password"
+                name="password"
                 autoComplete="off"
                 required
-                onChange={(e) => setPassword(e.target.value)}
-                defaultValue={currentUser ? currentUser.password : ''}
+                onChange={onChange}
+                value={form.password || ''}
               />
-            </Form.Group>
-            <Button variant="primary" type="submit" className="app-button">
+            </div>
+            <button
+              variant="primary"
+              type="submit"
+              className="btn btn-primary app-button"
+            >
               {!currentUser ? 'Registrar' : 'Guardar cambios'}
-            </Button>
-          </Form>
+            </button>
+          </form>
         </Container>
       </Container>
     </>
   );
-}
+};
 
 export default RegisterPage;

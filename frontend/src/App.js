@@ -14,6 +14,8 @@ import UserProfile from './pages/user-profile/user-profile.page';
 import LogoOut from './components/logout';
 import AdminProducts from './pages/admin/products/admin-products.page';
 
+import useForm from './hooks/useForm';
+
 function App() {
   return (
     /* Public routes */
@@ -21,7 +23,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Root />} errorElement={<ErrorPage />}>
           <Route index element={<HomePage />}></Route>
-          <Route path="/signup" element={<RegisterPage />}></Route>
+          <Route
+            path="/signup"
+            element={<RegisterPage form={useForm()} />}
+          ></Route>
           <Route path="/login" element={<LoginPage />}></Route>
           <Route path="/profile" element={<UserProfile />}></Route>
           <Route path="/logout" element={<LogoOut />}></Route>

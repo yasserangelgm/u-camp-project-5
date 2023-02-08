@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 const DEV = true;
 
@@ -9,13 +9,19 @@ const BASE_URL = DEV
 export default axios.create({
   baseURL: BASE_URL,
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
 });
+
+let headers = {};
+if (localStorage.token) {
+  headers.Authorization = `Bearer ${localStorage.token}`;
+}
 
 export const axiosPrivate = axios.create({
   baseURL: BASE_URL,
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
+    Authorization: headers.Authorization,
   },
 });

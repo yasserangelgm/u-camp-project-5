@@ -2,7 +2,7 @@ import './App.css';
 import ErrorPage from './pages/error-page/error-page.page';
 import RegisterPage from './pages/register/register.page';
 import LoginPage from './pages/login/login.page';
-import Root from './components/root/root.component';
+import Root from './components/root-user/root.component';
 import RootAdmin from './components/root-admin/root-admin.component';
 import { HomePage } from './pages/home/home.page';
 import RequireAuth from './components/require-auth';

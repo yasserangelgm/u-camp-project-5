@@ -1,6 +1,6 @@
 import useProduct from '../../hooks/useProduct';
 import { useEffect } from 'react';
-import { getProducts } from '../../actions/products.actions';
+import { getProducts } from '../../context/actions/products.actions';
 import { Container } from 'react-bootstrap';
 
 const ProductList = ({ adminMode }) => {

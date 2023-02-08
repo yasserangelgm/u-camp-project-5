@@ -1,5 +1,5 @@
 import { createContext, useReducer } from 'react';
-/* import axios from '../../api/axios'; */
+
 import productInitialState from '../initialStates/productInitialState';
 import productReducer from '../reducers/product.reducer';
 
@@ -10,15 +10,6 @@ export const ProductProvider = ({ children }) => {
     productReducer,
     productInitialState
   );
-
-  /* const getProducts = async () =>{
-        try{
-            const response = await axios.get('/product/');
-
-        }catch (error){
-
-        }
-    } */
 
   return (
     <ProductContext.Provider value={{ productsState, productDispatch }}>

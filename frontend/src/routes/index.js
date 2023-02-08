@@ -1,51 +1,22 @@
-import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  Route,
-} from 'react-router-dom';
-import ErrorPage from '../pages/error-page/error-page.page';
-import RegisterPage from '../pages/register/register.page';
-import LoginPage from '../pages/login/login.page';
-import Root from '../components/root/root.component';
-import RootAdmin from '../components/root-admin/root-admin.component';
+import LogoOut from '../components/logout';
 import { HomePage } from '../pages/home/home.page';
-import RequireAuth from '../components/require-auth';
+import LoginPage from '../pages/login/login.page';
+import RegisterPage from '../pages/register/register.page';
 import { Unauthorized } from '../pages/unauthorized/unauthorized.page';
-import AdminHomePage from '../pages/admin/home/admin-home.page';
-import Users from '../components/user/users.component';
+import UserProfile from '../pages/user-profile/user-profile.page';
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <>
-      <Route path="/" element={<Root />} errorElement={<ErrorPage />}>
-        <Route index element={<HomePage />}></Route>
-        <Route path="/signup" element={<RegisterPage />}></Route>
-        <Route path="/login" element={<LoginPage />}></Route>
-        <Route path="/contact" element={<RegisterPage />}></Route>
-        <Route path="/products" element={<RegisterPage />}></Route>
-        <Route path="/products:productId" element={<RegisterPage />}></Route>
-        <Route path="unauthorized" element={<Unauthorized />}></Route>
-      </Route>
-      <Route element={<RequireAuth />}>
-        <Route
-          path="/admin/dashboard"
-          element={<RootAdmin />}
-          errorElement={<ErrorPage />}
-        >
-          <Route index element={<AdminHomePage />}></Route>
-          <Route
-            path="/admin/dashboard/products"
-            element={<RegisterPage />}
-          ></Route>
-          <Route
-            path="/admin/dashboard/categories"
-            element={<LoginPage />}
-          ></Route>
-          <Route path="/admin/dashboard/users" element={<Users />}></Route>
-        </Route>
-      </Route>
-    </>
-  )
-);
-
-export default router;
+export const publicRoutes = [
+  /* { path: '/', element: HomePage, tittle: 'SU - Inicio' }, */
+  { path: '/signup', element: RegisterPage, tittle: 'SU - Registro' },
+  { path: '/login', element: LoginPage, tittle: 'SU - Iniciar sesión' },
+  { path: '/profile', element: UserProfile, tittle: 'SU - Perfil' },
+  { path: '/logout', element: LogoOut, tittle: 'SU - Cerrar sesión' },
+  { path: '/contact', element: RegisterPage, tittle: 'SU - Contacto' },
+  { path: '/products', element: RegisterPage, tittle: 'SU - Productos' },
+  {
+    path: '/products:productId',
+    element: RegisterPage,
+    tittle: 'SU - Detalle ',
+  },
+  { path: 'unauthorized', element: Unauthorized, tittle: 'SU - No autorizado' },
+];

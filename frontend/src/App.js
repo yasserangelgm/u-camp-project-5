@@ -37,7 +37,7 @@ function App() {
             element={<RegisterPage form={useForm()} />}
           ></Route>
           <Route path="/login" element={<LoginPage form={useForm()} />}></Route>
-          <Route path="/profile" element={<UserProfile />}></Route>
+
           <Route path="/logout" element={<LogoOut />}></Route>
           <Route path="/contact" element={<RegisterPage />}></Route>
           <Route path="/products" element={<RegisterPage />}></Route>
@@ -48,6 +48,10 @@ function App() {
         {/* Protected routes */}
 
         <Route element={<RequireAuth />}>
+          <Route path="/" element={<Root />} errorElement={<ErrorPage />}>
+            <Route path="/profile" element={<UserProfile />}></Route>
+          </Route>
+
           <Route
             path="/admin/dashboard"
             element={<RootAdmin />}

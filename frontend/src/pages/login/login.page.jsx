@@ -1,26 +1,32 @@
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import { useEffect, useState } from "react";
-import useAuth from "../../hooks/useAuth";
-import useUser from "../../hooks/useUser";
-import { signin } from "../../context/actions/auth.actions";
-import axios from "../../api/axios";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import "./login.styles.css";
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import { useEffect } from 'react';
+import useAuth from '../../hooks/useAuth';
+import { signin } from '../../context/actions/auth.actions';
+
+import { Link, useNavigate, useLocation, redirect } from 'react-router-dom';
+import './login.styles.css';
 
 const LoginPage = ({ form: { onChange, form } }) => {
-  const { authState, authDispatch, persist, setPersist } = useAuth();
-  const { setCurrentUser } = useUser();
+  const {
+    authDispatch,
+    persist,
+    setPersist,
+    authState: {
+      auth: { data },
+    },
+  } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || '/';
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     signin(form)(authDispatch);
+    navigate(from, { replace: true });
   };
 
   const togglePersist = () => {
@@ -28,7 +34,7 @@ const LoginPage = ({ form: { onChange, form } }) => {
   };
 
   useEffect(() => {
-    localStorage.setItem("persist", persist);
+    localStorage.setItem('persist', !persist);
   }, [persist]);
   return (
     <>
@@ -45,7 +51,7 @@ const LoginPage = ({ form: { onChange, form } }) => {
                 placeholder="Escriba su e-mail"
                 className="form-control"
                 onChange={onChange}
-                value={form.email || ""}
+                value={form.email || ''}
               />
               <Form.Text className="text-muted">
                 Nunca compartiremos tu correo con nadie más.
@@ -60,7 +66,7 @@ const LoginPage = ({ form: { onChange, form } }) => {
                 placeholder="Escriba su contraseña"
                 className="form-control shadow-none text-input"
                 onChange={onChange}
-                value={form.password || ""}
+                value={form.password || ''}
               />
             </div>
 

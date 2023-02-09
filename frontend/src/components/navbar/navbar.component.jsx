@@ -3,10 +3,16 @@ import BurguerButton from '../burguer-menu/burguer-button.component';
 import Container from 'react-bootstrap/Container';
 import NavLink from 'react-bootstrap/NavLink';
 import { LinkContainer } from 'react-router-bootstrap';
-import useUser from '../../hooks/useUser';
 import { useState } from 'react';
+import useAuth from '../../hooks/useAuth';
 const NavBar = () => {
-  const { currentUser } = useUser();
+  const {
+    authState: {
+      auth: { data },
+    },
+  } = useAuth();
+
+  console.log('NAVBAR', data?.user);
   const [clicked, setClicked] = useState(false);
 
   const handleClick = () => {
@@ -22,7 +28,7 @@ const NavBar = () => {
               <LinkContainer to="/">
                 <NavLink>
                   <img
-                    src="./public/assets/store.jpg"
+                    src="/assets/logo-su.jpg"
                     alt="Logotipo SU: Casa de arte popular y diseño"
                     className="top-logo"
                   />
@@ -73,10 +79,10 @@ const NavBar = () => {
               </div>
             </div>
             <div className="nav-container-item p-2 search-icon-container">
-              <i className="bi bi-search"></i>
+              {data?.user ? data.user.name : ''}
             </div>
             <div className="nav-container-item p-2 shop-icons-container">
-              <LinkContainer to={!currentUser ? '/login' : '/profile'}>
+              <LinkContainer to={!data?.user ? '/login' : '/profile'}>
                 <NavLink>
                   <i className="bi bi-person-circle fs-5"></i>
                 </NavLink>

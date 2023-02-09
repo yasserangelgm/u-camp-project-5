@@ -13,15 +13,10 @@ export default axios.create({
   },
 });
 
-let headers = {};
-if (localStorage.token) {
-  headers.Authorization = `Bearer ${localStorage.token}`;
-}
-
 export const axiosPrivate = axios.create({
   baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
-    Authorization: headers.Authorization,
+    Authorization: `Bearer ${localStorage.accessToken}`,
   },
 });

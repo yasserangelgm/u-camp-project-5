@@ -2,7 +2,7 @@ import './home.styles.css';
 import { Container } from 'react-bootstrap';
 import ProductList from '../../components/product-list/product-list.component';
 
-export const HomePage = () => {
+const HomePage = () => {
   return (
     <main>
       <Container className="container-fluid  hero mw-100">
@@ -20,3 +20,5 @@ export const HomePage = () => {
     </main>
   );
 };
+
+export default HomePage;

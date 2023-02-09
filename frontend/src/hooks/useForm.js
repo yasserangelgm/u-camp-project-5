@@ -7,7 +7,6 @@ const useForm = (e) => {
     e.preventDefault();
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-  console.log(form);
   return { form, onChange };
 };
 

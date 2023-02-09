@@ -1,7 +1,8 @@
 const authReducer = (state, { payload, type }) => {
   switch (type) {
-    case "SIGNUP_IN_PROGRESS":
-    case "LOGIN_IN_PROGRESS":
+    case 'SIGNUP_IN_PROGRESS':
+    case 'LOGIN_IN_PROGRESS':
+    case 'GET_AUTH_IN_PROGRESS':
       return {
         ...state,
         auth: {
@@ -9,8 +10,9 @@ const authReducer = (state, { payload, type }) => {
           inProgress: true,
         },
       };
-    case "SIGNUP_SUCCESS":
-    case "LOGIN_SUCCESS":
+    case 'SIGNUP_SUCCESS':
+    case 'LOGIN_SUCCESS':
+    case 'GET_AUTH_SUCCESS':
       return {
         ...state,
         auth: {
@@ -19,8 +21,9 @@ const authReducer = (state, { payload, type }) => {
           data: { ...payload },
         },
       };
-    case "SIGNUP_ERROR":
-    case "LOGIN_ERROR":
+    case 'SIGNUP_ERROR':
+    case 'LOGIN_ERROR':
+    case 'GET_AUTH_ERROR':
       return {
         ...state,
         auth: {
@@ -29,6 +32,15 @@ const authReducer = (state, { payload, type }) => {
           error: payload,
         },
       };
+
+    /*  return {
+        ...state,
+        auth: {
+          ...state.auth,
+          inProgress: false,
+          accessToken: payload,
+        },
+      }; */
     default:
       return state;
   }

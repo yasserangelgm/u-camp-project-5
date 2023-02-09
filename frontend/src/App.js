@@ -1,22 +1,31 @@
-import "./App.css";
-import ErrorPage from "./pages/error-page/error-page.page";
-import RegisterPage from "./pages/register/register.page";
-import LoginPage from "./pages/login/login.page";
-import Root from "./components/root-user/root.component";
-import RootAdmin from "./components/root-admin/root-admin.component";
-import { HomePage } from "./pages/home/home.page";
-import RequireAuth from "./components/require-auth";
-import { Unauthorized } from "./pages/unauthorized/unauthorized.page";
-import AdminHomePage from "./pages/admin/home/admin-home.page";
-import Users from "./components/user/users.component";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
-import UserProfile from "./pages/user-profile/user-profile.page";
-import LogoOut from "./components/logout";
-import AdminProducts from "./pages/admin/products/admin-products.page";
+import './App.css';
+import ErrorPage from './pages/error-page/error-page.page';
+import RegisterPage from './pages/register/register.page';
+import LoginPage from './pages/login/login.page';
+import Root from './components/root-user/root.component';
+import RootAdmin from './components/root-admin/root-admin.component';
+import HomePage from './pages/home/home.page';
+import RequireAuth from './components/require-auth';
+import Unauthorized from './pages/unauthorized/unauthorized.page';
+import AdminHomePage from './pages/admin/home/admin-home.page';
+import Users from './components/user/users.component';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import UserProfile from './pages/user-profile/user-profile.page';
+import LogoOut from './components/logout';
+import AdminProducts from './pages/admin/products/admin-products.page';
 
-import useForm from "./hooks/useForm";
+import useForm from './hooks/useForm';
+import { useEffect } from 'react';
+import useAuth from './hooks/useAuth';
+import { getAuth } from './context/actions/auth.actions';
 
 function App() {
+  const { authDispatch } = useAuth();
+
+  useEffect(() => {
+    getAuth()(authDispatch);
+  }, [authDispatch]);
+
   return (
     /* Public routes */
     <BrowserRouter basename="/">

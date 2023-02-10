@@ -22,3 +22,23 @@
   color: #fff;
   font-weight: 400;
 }
+
+.tittle {
+  font-family: 'Lora', serif;
+}
+
+.rigth-link {
+  position: absolute;
+  top: 15px;
+  right: 0;
+}
+
+@media (max-width: 576px) {
+  .rigth-link {
+    position: inherit;
+    top: 0;
+  }
+}
+
+@media (min-width: 768px) {
+}

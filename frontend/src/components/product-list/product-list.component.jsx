@@ -3,15 +3,8 @@ import { useEffect } from 'react';
 import { getProducts } from '../../context/actions/products.actions';
 import { Container } from 'react-bootstrap';
 
-const ProductList = ({ adminMode }) => {
-  const {
-    productsState: { products },
-    productDispatch,
-  } = useProduct();
-
-  useEffect(() => {
-    getProducts()(productDispatch);
-  }, []);
+const ProductList = ({ adminMode, products }) => {
+  console.log(products);
   return (
     <div>
       {products?.loading ? (

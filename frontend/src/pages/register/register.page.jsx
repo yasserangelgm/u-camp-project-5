@@ -1,60 +1,27 @@
 import Container from 'react-bootstrap/Container';
 import useAuth from '../../hooks/useAuth';
-
-/* import useAxiosPrivate from '../../hooks/useAxiosPrivate'; */
-import { signup } from '../../context/actions/auth.actions';
-/* import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; */
-
+import { useNavigate } from 'react-router-dom';
+import { signup, updateUser } from '../../context/actions/auth.actions';
 import './register.styles.css';
 
 const RegisterPage = ({ form: { onChange, form } }) => {
-  const { authDispatch } = useAuth();
-  /*  const navigate = useNavigate();
   const {
-    authState: {
-      auth: { data },
-    },
     authDispatch,
-  } = useAuth(); */
-
-  /*  useEffect(() => {
-    navigate('/login', { replace: true });
-  }, []); */
+    authState: { auth },
+  } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     //TODO Validate inputs with REGEX? or library
 
     e.preventDefault();
-
-    signup(form)(authDispatch);
-    /* else {
-      try {
-        const response = await axiosPrivate.put(
-          `/users/${currentUser.id}`,
-          {
-            id: currentUser.id,
-            name: name === '' ? currentUser.name : name,
-            lastname: lastName === '' ? currentUser.lastname : lastName,
-            email: email === '' ? currentUser.email : email,
-            password: password,
-          },
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${auth.accessToken}`,
-            },
-          }
-        );
-        setCurrentUser(response.data);
-      } catch (err) {
-        if (!err?.response) {
-          console.log('No hay respuesta del servidor');
-        } else {
-          console.log(err);
-        }
-      }
-    } */
+    if (auth?.data?.user) {
+      updateUser(form)(authDispatch);
+      navigate('/profile', { replace: true });
+    } else {
+      signup(form)(authDispatch);
+      navigate('/', { replace: true });
+    }
   };
 
   return (
@@ -75,7 +42,7 @@ const RegisterPage = ({ form: { onChange, form } }) => {
                 autoComplete="off"
                 required
                 onChange={onChange}
-                value={form.name || ''}
+                value={form.name || auth?.data?.user.name || ''}
               />
             </div>
             <div className="mb-3">
@@ -89,7 +56,7 @@ const RegisterPage = ({ form: { onChange, form } }) => {
                 autoComplete="off"
                 required
                 onChange={onChange}
-                value={form.lastname || ''}
+                value={form.lastname || auth?.data?.user.lastname || ''}
               />
             </div>
             <div className="mb-3">
@@ -103,7 +70,7 @@ const RegisterPage = ({ form: { onChange, form } }) => {
                 autoComplete="off"
                 required
                 onChange={onChange}
-                value={form.email || ''}
+                value={form.email || auth?.data?.user.email || ''}
               />
             </div>
 
@@ -126,7 +93,7 @@ const RegisterPage = ({ form: { onChange, form } }) => {
               type="submit"
               className="btn btn-primary app-button"
             >
-              {'Registrar'}
+              {auth?.data?.user ? 'Guardar cambios' : 'Registrar'}
             </button>
           </form>
         </Container>

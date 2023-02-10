@@ -5,7 +5,7 @@ require('dotenv').config();
 exports.verifyToken = async (req, res, next) => {
   const authHeader =
     req.headers['authorization'] || req.headers['Authorization'];
-  console.log(authHeader);
+  console.log('VERIFY TOKEN', authHeader);
   if (!authHeader?.startsWith('Bearer '))
     return res.status(401).json({ error: 'No ha proporcionado un token' });
 

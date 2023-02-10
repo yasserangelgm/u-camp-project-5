@@ -84,13 +84,12 @@ exports.signin = async (req, res) => {
 };
 
 exports.updateUserById = async (req, res) => {
+  console.log(req.userId, req.body);
   try {
-    const updatedUser = await User.findByIdAndUpdate(
-      req.params.userId,
-      req.body,
-      { new: true }
-    );
-
+    const updatedUser = await User.findByIdAndUpdate(req.userId, req.body, {
+      new: true,
+    });
+    const accessToken = req.accessToken;
     responseUser = {
       id: updatedUser._id,
       name: updatedUser.name,
@@ -99,7 +98,7 @@ exports.updateUserById = async (req, res) => {
       role: updatedUser.role,
     };
 
-    res.status(200).json(responseUser);
+    res.status(200).json({ accessToken, user: responseUser });
   } catch (error) {
     res.status(500).json({
       msg: 'Hubo un error en la base de datos' + error,

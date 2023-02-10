@@ -15,6 +15,6 @@ router.get('/users', verifyToken, isAdmin, getUsers);
 router.get('/user/', verifyToken, getUserById);
 router.post('/signin', signin);
 router.post('/signup', signup);
-router.put('/users/:userId', verifyToken, updateUserById);
+router.put('/user/', verifyToken, updateUserById);
 
 module.exports = router;

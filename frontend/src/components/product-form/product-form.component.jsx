@@ -2,13 +2,14 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
-const ProductForm = ({ show, handleClose }) => {
-  console.log(show, handleClose);
+const ProductForm = ({ show, onHide, mode }) => {
   return (
     <>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={onHide}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>
+            {mode === 0 ? 'Agregar' : mode === 1 ? 'Editar' : 'Eliminar'}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -30,12 +31,10 @@ const ProductForm = ({ show, handleClose }) => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={onHide}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
+          <Button variant="primary">Save Changes</Button>
         </Modal.Footer>
       </Modal>
     </>

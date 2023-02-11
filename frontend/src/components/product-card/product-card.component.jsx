@@ -1,4 +1,4 @@
-import React from 'react';
+import ProductForm from '../product-form/product-form.component';
 
 import './product-card.styles.css';
 const ProductCard = ({
@@ -7,7 +7,8 @@ const ProductCard = ({
   price,
   imgURL,
   adminMode,
-  handleShow,
+  handleSetShow,
+  handleSetMode,
 }) => {
   return (
     <>
@@ -36,7 +37,14 @@ const ProductCard = ({
                 role="group"
                 aria-label="First group"
               >
-                <button type="button" className="btn btn-secondary">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => {
+                    handleSetShow(true);
+                    handleSetMode(1);
+                  }}
+                >
                   Editar
                 </button>
               </div>
@@ -48,7 +56,10 @@ const ProductCard = ({
                 <button
                   type="button"
                   className="btn btn-secondary"
-                  onClick={handleShow()}
+                  onClick={() => {
+                    handleSetShow(true);
+                    handleSetMode(3);
+                  }}
                 >
                   Eliminar
                 </button>

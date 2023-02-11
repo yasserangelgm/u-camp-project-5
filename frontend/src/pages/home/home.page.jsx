@@ -14,7 +14,7 @@ const HomePage = () => {
   } = useProduct();
 
   useEffect(() => {
-    getProducts()(productDispatch);
+    getProducts({ limit: 3, sort: -1 })(productDispatch);
   }, []);
 
   return (
@@ -33,7 +33,7 @@ const HomePage = () => {
       <Container className="container-fluid mw-100 py-4">
         <Container className="container-sm mw-100 px-0 position-relative">
           <h3 className="py-4 my-0 fs-2 tittle">Nuevos productos</h3>
-          <Link to="/shop" className="btn btn-primary p-3  end-0 rigth-link">
+          <Link to="/shop" className="btn btn-secondary p-3  end-0 rigth-link">
             Ver todos los productos
           </Link>
         </Container>

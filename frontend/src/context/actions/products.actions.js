@@ -1,12 +1,17 @@
 import axios from '../../api/axios';
 
-export const getProducts = () => async (dispatch) => {
+export const getProducts = (query) => async (dispatch) => {
+  const queryString = Object.entries(query)
+    .reduce((acc, q) => {
+      return (acc += `${q[0]}=${q[1]}&`);
+    }, '?')
+    .replace(/&$/i, '');
+
   dispatch({
     type: 'LOADING_PRODUCTS',
   });
   try {
-    const response = await axios.get('/product/');
-
+    const response = await axios.get(`/product/${queryString}`);
     dispatch({
       type: 'LOADING_SUCCESS',
       payload: response.data,

@@ -1,9 +1,10 @@
 const Product = require('../models/product.model');
 
 exports.getProducts = async (req, res) => {
-  console.log('QUERY', req.query);
   try {
-    const products = await Product.find({});
+    const products = await Product.find({})
+      .limit(req?.query?.limit)
+      .sort({ createdAt: req?.query?.sort });
     res.status(200).json({ products });
   } catch (error) {
     res.status(500).json({ error: error });

@@ -47,28 +47,28 @@ function App() {
 
         {/* Protected routes */}
 
-        <Route element={<RequireAuth />}>
-          <Route path="/" element={<Root />} errorElement={<ErrorPage />}>
-            <Route path="/profile" element={<UserProfile />}></Route>
-          </Route>
-
-          <Route
-            path="/admin/dashboard"
-            element={<RootAdmin />}
-            errorElement={<ErrorPage />}
-          >
-            <Route index element={<AdminHomePage />}></Route>
-            <Route
-              path="/admin/dashboard/products"
-              element={<AdminProducts />}
-            ></Route>
-            <Route
-              path="/admin/dashboard/categories"
-              element={<LoginPage />}
-            ></Route>
-            <Route path="/admin/dashboard/users" element={<Users />}></Route>
-          </Route>
+        {/* <Route element={<RequireAuth />}> */}
+        <Route path="/" element={<Root />} errorElement={<ErrorPage />}>
+          <Route path="/profile" element={<UserProfile />}></Route>
         </Route>
+
+        <Route
+          path="/admin/dashboard"
+          element={<RootAdmin />}
+          errorElement={<ErrorPage />}
+        >
+          <Route index element={<AdminHomePage />}></Route>
+          <Route
+            path="/admin/dashboard/products"
+            element={<AdminProducts />}
+          ></Route>
+          <Route
+            path="/admin/dashboard/categories"
+            element={<LoginPage />}
+          ></Route>
+          <Route path="/admin/dashboard/users" element={<Users />}></Route>
+        </Route>
+        {/*   </Route> */}
 
         <Route path="*" element={<ErrorPage />}></Route>
       </Routes>

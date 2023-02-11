@@ -1,7 +1,14 @@
 import React from 'react';
 
 import './product-card.styles.css';
-const ProductCard = ({ name, description, price, imgURL, adminMode }) => {
+const ProductCard = ({
+  name,
+  description,
+  price,
+  imgURL,
+  adminMode,
+  handleShow,
+}) => {
   return (
     <>
       <div className="card">
@@ -38,7 +45,11 @@ const ProductCard = ({ name, description, price, imgURL, adminMode }) => {
                 role="group"
                 aria-label="Second group"
               >
-                <button type="button" className="btn btn-secondary">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={handleShow()}
+                >
                   Eliminar
                 </button>
               </div>

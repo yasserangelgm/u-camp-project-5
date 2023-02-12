@@ -16,11 +16,12 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    category: {
-      type: mongoose.Schema.Types.ObjectId,
+    //TODO Implementar categorías
+    /* category: {
+      type: mongoose.Schema.Types.ObjectId, 
       ref: 'Category',
       required: true,
-    },
+    }, */
     quantity: {
       type: Number,
     },

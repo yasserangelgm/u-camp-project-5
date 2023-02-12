@@ -21,6 +21,7 @@ exports.getProductById = async (req, res) => {
 };
 
 exports.createProduct = async (req, res) => {
+  console.log('CREATE PRODUCT', req.body);
   try {
     const newProduct = new Product(req.body);
     const savedProduct = await newProduct.save();

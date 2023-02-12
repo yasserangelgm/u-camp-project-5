@@ -17,6 +17,6 @@ export const axiosPrivate = axios.create({
   baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${localStorage.accessToken}`,
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
   },
 });

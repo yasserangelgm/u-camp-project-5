@@ -1,13 +1,19 @@
-import Container from 'react-bootstrap/Container';
+import { useEffect } from 'react';
+import useProduct from '../../hooks/useProduct';
 import ProductCard from '../product-card/product-card.component';
 import './product-list.styles.css';
 const ProductList = ({
   adminMode,
-  products,
   handleSetShow,
   handleSetMode,
   handleSetproductId,
 }) => {
+  const {
+    productsState: { products },
+  } = useProduct();
+
+  console.log(products);
+
   return (
     <>
       <section className="product-list-container" id="product-list-container">

@@ -36,10 +36,21 @@ export const addProduct =
   ({ name, description, price, imgURL, quantity }) =>
   async (dispatch) => {
     dispatch({
-      type: 'SAVING_PRODUCT',
+      type: 'SAVING_PRODUCT_IN_PROGRESS',
     });
 
     try {
+      const response = await axiosPrivate.post(
+        '/product',
+        { name, description, price, imgURL, quantity },
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+      dispatch({
+        type: 'SAVING_PRODUCT_SUCCESS',
+        payload: { ...response.data },
+      });
     } catch (err) {
       if (!err?.response) {
         console.log('No hay respuesta del servidor'); //Seria conveniente borrar este if??????
@@ -47,7 +58,7 @@ export const addProduct =
         console.log(err);
       }
       dispatch({
-        type: 'SAVING_ERROR',
+        type: 'SAVING_PRODUCT_ERROR',
         payload: err.response
           ? err.response.data
           : 'No hay respuesta del servidor',

@@ -11,13 +11,12 @@ const ProductForm = ({
 }) => {
   const {
     productsState: {
-      addProduct: { saving, error, data },
+      products: { loading, error, data },
     },
     productDispatch,
   } = useProduct();
-  console.log('ADD PRODUCT', addProduct);
+
   const handleSubmit = async (e) => {
-    console.log('FORM', form);
     e.preventDefault();
     addProduct(form)(productDispatch);
   };

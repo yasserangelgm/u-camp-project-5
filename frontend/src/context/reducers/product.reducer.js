@@ -5,7 +5,7 @@ const productReducer = (state, { payload, type }) => {
         ...state,
         products: {
           ...state.products,
-          loading: true,
+          isLoading: true,
         },
       };
 
@@ -14,7 +14,7 @@ const productReducer = (state, { payload, type }) => {
         ...state,
         products: {
           ...state.products,
-          loading: false,
+          isLoading: false,
           data: payload,
         },
       };
@@ -24,17 +24,39 @@ const productReducer = (state, { payload, type }) => {
         ...state,
         products: {
           ...state.products,
-          loading: false,
+          isLoading: false,
           error: payload,
         },
       };
 
-    case 'SAVING_PRODUCT':
+    case 'SAVING_PRODUCT_IN_PROGRESS':
       return {
         ...state,
-        addProduct: {
-          ...state.addProduct,
-          saving: true,
+        products: {
+          ...state.products,
+          isLoading: true,
+          error: null,
+        },
+      };
+
+    case 'SAVING_PRODUCT_SUCCESS':
+      return {
+        products: {
+          ...state.products,
+          data: {
+            products: [payload, ...state.products.data.products],
+          },
+          isLoading: false,
+        },
+      };
+
+    case 'SAVING_PRODUCT_ERROR':
+      return {
+        ...state,
+        products: {
+          ...state.products,
+          isLoading: false,
+          error: payload,
         },
       };
     default:

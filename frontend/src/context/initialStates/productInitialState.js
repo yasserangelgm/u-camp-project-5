@@ -1,13 +1,8 @@
 const productInitialState = {
   products: {
-    loading: false,
-    data: null,
+    isLoading: false,
+    data: [],
     error: null,
-  },
-  addProduct: {
-    saving: false,
-    error: null,
-    data: null,
   },
 };
 

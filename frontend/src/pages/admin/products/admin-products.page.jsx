@@ -39,7 +39,6 @@ const AdminProducts = () => {
         <Container className="container-fluid mw-100">
           <ProductList
             adminMode={true}
-            products={products}
             handleSetShow={setShow}
             handleSetMode={setMode}
             handleSetproductId={setProductId}

@@ -13,8 +13,9 @@ exports.verifyToken = async (req, res, next) => {
 
   jwt.verify(token, process.env.ACCESS_SECRET, (err, decoded) => {
     if (err) return res.status(403).json({ error: 'Token no válido' });
+    console.log(decoded);
     req.userId = decoded.user.id;
-    req.role = decoded.role;
+    req.role = decoded.user.role;
     req.accessToken = token;
     console.log(req.userId);
     next();
@@ -23,6 +24,7 @@ exports.verifyToken = async (req, res, next) => {
 
 exports.isAdmin = (req, res, next) => {
   const role = req.role;
+  console.log('ROLE', role);
   if (role !== 1)
     return res.status(403).json({ error: 'Acceso no autorizado' });
 

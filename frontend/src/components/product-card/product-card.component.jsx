@@ -1,5 +1,3 @@
-import ProductForm from '../product-form/product-form.component';
-
 import './product-card.styles.css';
 const ProductCard = ({
   name,
@@ -9,6 +7,8 @@ const ProductCard = ({
   adminMode,
   handleSetShow,
   handleSetMode,
+  handleSetproductId,
+  productId,
 }) => {
   return (
     <>
@@ -19,6 +19,7 @@ const ProductCard = ({
           alt={description}
         />
         <div className="card-body">
+          <h6>{productId}</h6>
           <h5 className="card-title">{name}</h5>
           <p className="card-text">{description}</p>
           <p className="price">{`$${price}`}</p>
@@ -43,6 +44,7 @@ const ProductCard = ({
                   onClick={() => {
                     handleSetShow(true);
                     handleSetMode(1);
+                    handleSetproductId(productId);
                   }}
                 >
                   Editar
@@ -59,6 +61,7 @@ const ProductCard = ({
                   onClick={() => {
                     handleSetShow(true);
                     handleSetMode(3);
+                    handleSetproductId(productId);
                   }}
                 >
                   Eliminar

@@ -1,4 +1,9 @@
-const AdminPageHeader = ({ pageTittle, handleSetShow, handleSetMode }) => {
+const AdminPageHeader = ({
+  pageTittle,
+  handleSetShow,
+  handleSetMode,
+  handleSetproductId,
+}) => {
   return (
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -11,6 +16,7 @@ const AdminPageHeader = ({ pageTittle, handleSetShow, handleSetMode }) => {
               onClick={() => {
                 handleSetShow(true);
                 handleSetMode(0);
+                handleSetproductId(null);
               }}
             >
               Agregar

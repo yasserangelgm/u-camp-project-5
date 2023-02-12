@@ -10,6 +10,7 @@ import Button from 'react-bootstrap/Button';
 const AdminProducts = () => {
   const [show, setShow] = useState(false);
   const [mode, setMode] = useState(0);
+  const [productId, setProductId] = useState(null);
   const handleClose = () => setShow(false);
   /*  const handleShow = () => setShow(true); */
 
@@ -28,6 +29,7 @@ const AdminProducts = () => {
         pageTittle="Productos"
         handleSetShow={setShow}
         handleSetMode={setMode}
+        handleSetproductId={setProductId}
       />
       {products?.isLoading || !products.data ? (
         <div className="spinner-border" role="status">
@@ -40,10 +42,16 @@ const AdminProducts = () => {
             products={products}
             handleSetShow={setShow}
             handleSetMode={setMode}
+            handleSetproductId={setProductId}
           />
         </Container>
       )}
-      <ProductForm show={show} onHide={handleClose} mode={mode} />
+      <ProductForm
+        show={show}
+        onHide={handleClose}
+        mode={mode}
+        productId={productId}
+      />
     </>
   );
 };

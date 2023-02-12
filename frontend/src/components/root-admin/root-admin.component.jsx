@@ -5,19 +5,8 @@ import Footer from '../footer/footer.component';
 import AdminHeader from './admin-header/admin-header.component';
 import AdminNavbar from './admin-navbar/admin-navbar.component';
 import './root-admin.styles.css';
-import { useLocation } from 'react-router-dom';
+
 const RootAdmin = () => {
-  const location = useLocation();
-  const pageTittle = () => {
-    switch (location.pathname) {
-      case '/admin/dashboard/products':
-        return 'Productos';
-
-      default:
-        return 'Dashboard';
-    }
-  };
-
   return (
     <>
       <AdminHeader />

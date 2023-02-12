@@ -5,7 +5,7 @@ import ProductList from '../../../components/product-list/product-list.component
 import { getProducts } from '../../../context/actions/products.actions';
 import useProduct from '../../../hooks/useProduct';
 import AdminPageHeader from '../../../components/root-admin/admin-page-header/admin-page-header.component';
-import Button from 'react-bootstrap/Button';
+import useForm from '../../../hooks/useForm';
 
 const AdminProducts = () => {
   const [show, setShow] = useState(false);
@@ -51,6 +51,7 @@ const AdminProducts = () => {
         onHide={handleClose}
         mode={mode}
         productId={productId}
+        form={useForm()}
       />
     </>
   );

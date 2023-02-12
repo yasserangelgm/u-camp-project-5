@@ -1,13 +1,26 @@
 import Modal from 'react-bootstrap/Modal';
 import useProduct from '../../hooks/useProduct';
-import useForm from '../../hooks/useForm';
-const ProductForm = ({ show, onHide, mode, productId }) => {
+
+import { addProduct } from '../../context/actions/products.actions';
+const ProductForm = ({
+  show,
+  onHide,
+  mode,
+  productId,
+  form: { onChange, form },
+}) => {
   const {
-    productsState: { products },
+    productsState: {
+      addProduct: { saving, error, data },
+    },
     productDispatch,
   } = useProduct();
-
-  const form = useForm();
+  console.log('ADD PRODUCT', addProduct);
+  const handleSubmit = async (e) => {
+    console.log('FORM', form);
+    e.preventDefault();
+    addProduct(form)(productDispatch);
+  };
 
   return (
     <>
@@ -22,7 +35,7 @@ const ProductForm = ({ show, onHide, mode, productId }) => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form>
+          <form onSubmit={handleSubmit}>
             {productId && <h6>{productId}</h6>}
             <div className="mb-3">
               {/* <label className="form-label">Nombre del producto</label> */}
@@ -35,8 +48,8 @@ const ProductForm = ({ show, onHide, mode, productId }) => {
                 name="name"
                 autoComplete="off"
                 required
-                onChange={form.onChange}
-                value={form.name}
+                onChange={onChange}
+                value={form.name || ''}
               />
             </div>
             <div className="mb-3">
@@ -49,8 +62,8 @@ const ProductForm = ({ show, onHide, mode, productId }) => {
                 name="description"
                 autoComplete="off"
                 required
-                onChange={form.onChange}
-                value={form.description}
+                onChange={onChange}
+                value={form.description || ''}
               />
             </div>
             <div className="mb-3">
@@ -63,8 +76,8 @@ const ProductForm = ({ show, onHide, mode, productId }) => {
                 name="price"
                 autoComplete="off"
                 required
-                onChange={form.onChange}
-                value={form.price}
+                onChange={onChange}
+                value={form.price || ''}
               />
             </div>
             <div className="mb-3">
@@ -77,8 +90,8 @@ const ProductForm = ({ show, onHide, mode, productId }) => {
                 name="imgURL"
                 autoComplete="off"
                 required
-                onChange={form.onChange}
-                value={form.imgURL}
+                onChange={onChange}
+                value={form.imgURL || ''}
               />
             </div>
             <div className="mb-3">
@@ -91,8 +104,8 @@ const ProductForm = ({ show, onHide, mode, productId }) => {
                 name="quantity"
                 autoComplete="off"
                 required
-                onChange={form.onChange}
-                value={form.quantity}
+                onChange={onChange}
+                value={form.quantity || ''}
               />
             </div>
           </form>
@@ -101,7 +114,7 @@ const ProductForm = ({ show, onHide, mode, productId }) => {
           <button className="btn btn-secondary" onClick={onHide}>
             Cancelar
           </button>
-          <button className="btn btn-primary">
+          <button className="btn btn-primary" onClick={handleSubmit}>
             {mode !== 3 ? 'Guardar' : 'Eliminar'}
           </button>
         </div>

@@ -4,6 +4,11 @@ const productInitialState = {
     data: null,
     error: null,
   },
+  addProduct: {
+    saving: false,
+    error: null,
+    data: null,
+  },
 };
 
 export default productInitialState;

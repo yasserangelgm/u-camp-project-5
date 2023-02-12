@@ -28,6 +28,15 @@ const productReducer = (state, { payload, type }) => {
           error: payload,
         },
       };
+
+    case 'SAVING_PRODUCT':
+      return {
+        ...state,
+        addProduct: {
+          ...state.addProduct,
+          saving: true,
+        },
+      };
     default:
       return state;
   }

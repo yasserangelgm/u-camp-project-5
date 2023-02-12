@@ -7,7 +7,8 @@ const useForm = (e) => {
     e.preventDefault();
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-  return { form, onChange };
+
+  return { form, onChange, setForm };
 };
 
 export default useForm;

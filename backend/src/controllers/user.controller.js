@@ -67,7 +67,7 @@ exports.signin = async (req, res) => {
   };
 
   const accessToken = jwt.sign({ user: userInfo }, process.env.ACCESS_SECRET, {
-    expiresIn: '30m',
+    expiresIn: '1h',
   });
 
   await foundUser.save();

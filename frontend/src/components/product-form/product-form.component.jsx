@@ -2,19 +2,27 @@ import Modal from 'react-bootstrap/Modal';
 import useProduct from '../../hooks/useProduct';
 
 import { addProduct } from '../../context/actions/products.actions';
+import { useEffect, useState } from 'react';
+
 const ProductForm = ({
   show,
   onHide,
   mode,
   productId,
-  form: { onChange, form },
+  form: { onChange, form, setForm },
 }) => {
+  const [currentProduct, setCurrentProduct] = useState();
   const {
     productsState: {
       products: { loading, error, data },
     },
     productDispatch,
   } = useProduct();
+
+  useEffect(() => {
+    setCurrentProduct(data?.products?.find((p) => p._id === productId));
+    setForm(currentProduct);
+  }, [currentProduct, productId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,7 +43,8 @@ const ProductForm = ({
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={handleSubmit}>
-            {productId && <h6>{productId}</h6>}
+            {/* {productId && <h6>{currentProduct?._id}</h6>} */}
+            {console.log('CURRENT FORM JSX', form)}
             <div className="mb-3">
               {/* <label className="form-label">Nombre del producto</label> */}
               <input
@@ -48,7 +57,8 @@ const ProductForm = ({
                 autoComplete="off"
                 required
                 onChange={onChange}
-                value={form.name || ''}
+                value={form?.name || ''}
+                disabled={mode === 3 ? true : null}
               />
             </div>
             <div className="mb-3">
@@ -62,7 +72,8 @@ const ProductForm = ({
                 autoComplete="off"
                 required
                 onChange={onChange}
-                value={form.description || ''}
+                value={form?.description || ''}
+                disabled={mode === 3 ? true : null}
               />
             </div>
             <div className="mb-3">
@@ -76,7 +87,8 @@ const ProductForm = ({
                 autoComplete="off"
                 required
                 onChange={onChange}
-                value={form.price || ''}
+                value={form?.price || ''}
+                disabled={mode === 3 ? true : null}
               />
             </div>
             <div className="mb-3">
@@ -90,7 +102,8 @@ const ProductForm = ({
                 autoComplete="off"
                 required
                 onChange={onChange}
-                value={form.imgURL || ''}
+                value={form?.imgURL || ''}
+                disabled={mode === 3 ? true : null}
               />
             </div>
             <div className="mb-3">
@@ -104,7 +117,8 @@ const ProductForm = ({
                 autoComplete="off"
                 required
                 onChange={onChange}
-                value={form.quantity || ''}
+                value={form?.quantity || ''}
+                disabled={mode === 3 ? true : null}
               />
             </div>
           </form>

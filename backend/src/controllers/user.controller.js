@@ -84,7 +84,6 @@ exports.signin = async (req, res) => {
 };
 
 exports.updateUserById = async (req, res) => {
-  console.log(req.userId, req.body);
   try {
     const updatedUser = await User.findByIdAndUpdate(req.userId, req.body, {
       new: true,
@@ -110,7 +109,7 @@ exports.getUserById = async (req, res) => {
   try {
     const foundUser = await User.findById(req.userId);
     const accessToken = req.accessToken;
-    console.log('ACCESS TOKEN', accessToken);
+
     responseUser = {
       id: foundUser._id,
       name: foundUser.name,

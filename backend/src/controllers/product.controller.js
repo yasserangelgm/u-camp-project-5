@@ -21,7 +21,6 @@ exports.getProductById = async (req, res) => {
 };
 
 exports.createProduct = async (req, res) => {
-  console.log('CREATE PRODUCT', req.body);
   try {
     const newProduct = new Product(req.body);
     const savedProduct = await newProduct.save();
@@ -31,7 +30,6 @@ exports.createProduct = async (req, res) => {
   }
 };
 exports.updateProductById = async (req, res) => {
-  console.log(req.params.productId);
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.productId,

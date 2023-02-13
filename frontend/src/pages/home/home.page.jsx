@@ -14,7 +14,7 @@ const HomePage = () => {
   } = useProduct();
 
   useEffect(() => {
-    getProducts({ limit: 3, sort: -1 })(productDispatch);
+    getProducts({ limit: 4, sort: -1 })(productDispatch);
   }, []);
 
   return (
@@ -38,7 +38,13 @@ const HomePage = () => {
           </Link>
         </Container>
       </Container>
-      <ProductSlide products={products} />
+      {products ? (
+        <ProductSlide products={products} />
+      ) : (
+        <div className="spinner-border" role="status">
+          <span className="sr-only"></span>
+        </div>
+      )}
     </main>
   );
 };

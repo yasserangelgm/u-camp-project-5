@@ -31,6 +31,7 @@ exports.createProduct = async (req, res) => {
   }
 };
 exports.updateProductById = async (req, res) => {
+  console.log(req.params.productId);
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.productId,
@@ -46,8 +47,8 @@ exports.updateProductById = async (req, res) => {
 };
 exports.deleteProductById = async (req, res) => {
   try {
-    await Product.findByIdAndDelete(req.params.productId);
-    res.status(200).json({ msg: 'El producto se eliminó con éxito' });
+    const deleteProduct = await Product.findByIdAndDelete(req.params.productId);
+    res.status(200).json(deleteProduct);
   } catch (error) {
     res.status(500).json({
       msg: 'Hubo un error en la base de datos ' + error,

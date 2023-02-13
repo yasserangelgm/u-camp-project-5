@@ -7,9 +7,11 @@ const RequireAuth = () => {
   } = useAuth();
   const location = useLocation();
 
+  console.log('DESDE REQUIRE AUTH', auth?.data?.user?.role, auth.inProgress);
+
   return auth?.data?.user.role === 1 ? (
     <Outlet />
-  ) : auth?.data ? (
+  ) : auth?.data?.user ? (
     <Navigate to="/unauthorized" state={{ from: location }} replace />
   ) : (
     <Navigate to="/login" state={{ from: location }} replace />

@@ -4,8 +4,8 @@ import ProductCard from '../product-card/product-card.component';
 import './product-list.styles.css';
 const ProductList = ({
   adminMode,
-  handleSetShow,
-  handleSetMode,
+  handleSetShow = null,
+  handleSetMode = null,
   handleSetproductId,
 }) => {
   const {

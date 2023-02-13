@@ -17,12 +17,14 @@ const AdminProducts = () => {
   const {
     productsState: { products },
     productDispatch,
+    productsState,
   } = useProduct();
 
   useEffect(() => {
     getProducts({})(productDispatch);
   }, []);
 
+  console.log('PRODUCT STATE', productsState);
   return (
     <>
       <AdminPageHeader

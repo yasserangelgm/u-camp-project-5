@@ -1,20 +1,42 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, Navigate, Outlet } from 'react-router-dom';
-import { getUserById } from '../context/actions/auth.actions';
+import { getAuth } from '../context/actions/auth.actions';
 import useAuth from '../hooks/useAuth';
 
 const PersistLogin = () => {
-  const { authState, authDispatch } = useAuth();
-  const location = useLocation();
+  const {
+    authState: { auth, persist },
+    authDispatch,
+  } = useAuth();
 
   useEffect(() => {
-    getUserById()(authDispatch);
+    getAuth()(authDispatch);
+    let isMounted = true;
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
+  console.log(
+    'DESDE PERSIST LOGIN',
+    auth?.data?.user?.role,
+    auth.inProgress,
+    persist
+  );
+
   return (
-    <div>
-      <Outlet />
-    </div>
+    <>
+      {persist === true ? (
+        <Outlet />
+      ) : auth.inProgress ? (
+        <div className="spinner-border" role="status">
+          <span className="sr-only"></span>
+        </div>
+      ) : (
+        <Outlet />
+      )}
+    </>
   );
 };
 

@@ -22,13 +22,6 @@ const AdminPageHeader = ({
               Agregar
             </button>
           </div>
-          <button
-            type="button"
-            className="btn btn-sm btn-outline-secondary dropdown-toggle"
-          >
-            <span data-feather="calendar"></span>
-            This week
-          </button>
         </div>
       </div>
     </>

@@ -19,7 +19,6 @@ const ProductCard = ({
           alt={description}
         />
         <div className="card-body">
-          <h6>{productId}</h6>
           <h5 className="card-title">{name}</h5>
           <p className="card-text">{description}</p>
           <p className="price">{`$${price}`}</p>
@@ -60,7 +59,7 @@ const ProductCard = ({
                   className="btn btn-secondary"
                   onClick={() => {
                     handleSetShow(true);
-                    handleSetMode(3);
+                    handleSetMode(2);
                     handleSetproductId(productId);
                   }}
                 >

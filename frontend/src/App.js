@@ -18,6 +18,8 @@ import useForm from './hooks/useForm';
 import { useEffect } from 'react';
 import useAuth from './hooks/useAuth';
 import { getAuth } from './context/actions/auth.actions';
+import PersistLogin from './components/persist-login';
+import Shop from './pages/shop/shop.page';
 
 function App() {
   const { authDispatch } = useAuth();
@@ -30,46 +32,49 @@ function App() {
     /* Public routes */
     <BrowserRouter basename="/">
       <Routes>
-        <Route path="/" element={<Root />} errorElement={<ErrorPage />}>
-          <Route index element={<HomePage />}></Route>
-          <Route
-            path="/signup"
-            element={<RegisterPage form={useForm()} />}
-          ></Route>
-          <Route path="/login" element={<LoginPage form={useForm()} />}></Route>
-
-          <Route path="/logout" element={<LogoOut />}></Route>
-          <Route path="/contact" element={<RegisterPage />}></Route>
-          <Route path="/products" element={<RegisterPage />}></Route>
-          <Route path="/products:productId" element={<RegisterPage />}></Route>
-          <Route path="unauthorized" element={<Unauthorized />}></Route>
-        </Route>
-
-        {/* Protected routes */}
-
-        <Route element={<RequireAuth />}>
+        <Route element={<PersistLogin />}>
           <Route path="/" element={<Root />} errorElement={<ErrorPage />}>
+            <Route index element={<HomePage />}></Route>
+            <Route
+              path="/signup"
+              element={<RegisterPage form={useForm()} />}
+            ></Route>
+            <Route
+              path="/login"
+              element={<LoginPage form={useForm()} />}
+            ></Route>
             <Route path="/profile" element={<UserProfile />}></Route>
+            <Route path="/logout" element={<LogoOut />}></Route>
+            <Route path="/contact" element={<RegisterPage />}></Route>
+            <Route path="/shop" element={<Shop />}></Route>
+            <Route
+              path="/products:productId"
+              element={<RegisterPage />}
+            ></Route>
+            <Route path="unauthorized" element={<Unauthorized />}></Route>
           </Route>
 
-          <Route
-            path="/admin/dashboard"
-            element={<RootAdmin />}
-            errorElement={<ErrorPage />}
-          >
-            <Route index element={<AdminHomePage />}></Route>
+          {/* Protected routes */}
+
+          <Route element={<RequireAuth />}>
             <Route
-              path="/admin/dashboard/products"
-              element={<AdminProducts />}
-            ></Route>
-            <Route
-              path="/admin/dashboard/categories"
-              element={<LoginPage />}
-            ></Route>
-            <Route path="/admin/dashboard/users" element={<Users />}></Route>
+              path="/admin/dashboard"
+              element={<RootAdmin />}
+              errorElement={<ErrorPage />}
+            >
+              <Route index element={<AdminHomePage />}></Route>
+              <Route
+                path="/admin/dashboard/products"
+                element={<AdminProducts />}
+              ></Route>
+              <Route
+                path="/admin/dashboard/categories"
+                element={<LoginPage />}
+              ></Route>
+              <Route path="/admin/dashboard/users" element={<Users />}></Route>
+            </Route>
           </Route>
         </Route>
-
         <Route path="*" element={<ErrorPage />}></Route>
       </Routes>
     </BrowserRouter>

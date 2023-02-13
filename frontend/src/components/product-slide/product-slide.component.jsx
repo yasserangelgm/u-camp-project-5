@@ -24,26 +24,27 @@ const ProductSlide = ({ products }) => {
     },
   };
 
-  const productList = products?.data?.products?.map((item) => (
-    <ProductCard
-      key={item._id}
-      name={item.name}
-      description={item.description}
-      price={item.price}
-      imgURL={item.imgURL}
-    />
-  ));
-
+  console.log('PRIMERA CONDICION', products.data);
   return (
     <>
-      {products?.isLoading || !products.data ? (
+      {products.data.length === 0 ? (
         <div className="spinner-border" role="status">
           <span className="sr-only"></span>
         </div>
       ) : (
         <Container className="container-fluid mw-100">
           <Container className="container-sm mw-100 px-0">
-            <Carousel responsive={responsive}>{productList}</Carousel>
+            <Carousel responsive={responsive}>
+              {products?.data?.products?.map((item) => (
+                <ProductCard
+                  key={item._id}
+                  name={item.name}
+                  description={item.description}
+                  price={item.price}
+                  imgURL={item.imgURL}
+                />
+              ))}
+            </Carousel>
           </Container>
         </Container>
       )}

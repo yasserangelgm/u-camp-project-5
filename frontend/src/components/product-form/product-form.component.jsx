@@ -1,7 +1,11 @@
 import Modal from 'react-bootstrap/Modal';
 import useProduct from '../../hooks/useProduct';
 
-import { addProduct } from '../../context/actions/products.actions';
+import {
+  addProduct,
+  deleteProduct,
+  updateProduct,
+} from '../../context/actions/products.actions';
 import { useEffect, useState } from 'react';
 
 const ProductForm = ({
@@ -25,8 +29,16 @@ const ProductForm = ({
   }, [currentProduct, productId]);
 
   const handleSubmit = async (e) => {
+    console.log('SUBMIT mode', mode);
     e.preventDefault();
-    addProduct(form)(productDispatch);
+    if (mode === 0) {
+      addProduct(form)(productDispatch);
+    } else if (mode === 1) {
+      updateProduct(form)(productDispatch);
+    } else if (mode === 2) {
+      deleteProduct(form)(productDispatch);
+    }
+    onHide();
   };
 
   return (
@@ -58,7 +70,7 @@ const ProductForm = ({
                 required
                 onChange={onChange}
                 value={form?.name || ''}
-                disabled={mode === 3 ? true : null}
+                disabled={mode === 2 ? true : null}
               />
             </div>
             <div className="mb-3">
@@ -73,7 +85,7 @@ const ProductForm = ({
                 required
                 onChange={onChange}
                 value={form?.description || ''}
-                disabled={mode === 3 ? true : null}
+                disabled={mode === 2 ? true : null}
               />
             </div>
             <div className="mb-3">
@@ -88,7 +100,7 @@ const ProductForm = ({
                 required
                 onChange={onChange}
                 value={form?.price || ''}
-                disabled={mode === 3 ? true : null}
+                disabled={mode === 2 ? true : null}
               />
             </div>
             <div className="mb-3">
@@ -103,7 +115,7 @@ const ProductForm = ({
                 required
                 onChange={onChange}
                 value={form?.imgURL || ''}
-                disabled={mode === 3 ? true : null}
+                disabled={mode === 2 ? true : null}
               />
             </div>
             <div className="mb-3">
@@ -118,7 +130,7 @@ const ProductForm = ({
                 required
                 onChange={onChange}
                 value={form?.quantity || ''}
-                disabled={mode === 3 ? true : null}
+                disabled={mode === 2 ? true : null}
               />
             </div>
           </form>
@@ -128,7 +140,7 @@ const ProductForm = ({
             Cancelar
           </button>
           <button className="btn btn-primary" onClick={handleSubmit}>
-            {mode !== 3 ? 'Guardar' : 'Eliminar'}
+            {mode !== 2 ? 'Guardar' : 'Eliminar'}
           </button>
         </div>
       </Modal>

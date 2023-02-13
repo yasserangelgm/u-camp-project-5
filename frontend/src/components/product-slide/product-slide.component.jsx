@@ -24,7 +24,6 @@ const ProductSlide = ({ products }) => {
     },
   };
 
-  console.log('PRIMERA CONDICION', products.data);
   return (
     <>
       {products.data.length === 0 ? (

@@ -18,13 +18,6 @@ const PersistLogin = () => {
     };
   }, []);
 
-  console.log(
-    'DESDE PERSIST LOGIN',
-    auth?.data?.user?.role,
-    auth.inProgress,
-    persist
-  );
-
   return (
     <>
       {persist === true ? (

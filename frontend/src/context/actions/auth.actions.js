@@ -114,8 +114,6 @@ export const getAuth = () => async (dispatch) => {
       type: 'GET_AUTH_SUCCESS',
       payload: response.data,
     });
-
-    console.log(response?.data);
   } catch (err) {
     if (!err?.response) {
       console.log('No hay respuesta del servidor'); //Seria conveniente borrar este if??????
@@ -129,4 +127,12 @@ export const getAuth = () => async (dispatch) => {
         : 'No hay respuesta del servidor',
     });
   }
+};
+
+export const logout = () => (dispatch) => {
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('persist');
+  dispatch({
+    type: 'LOGOUT_SUCCESS',
+  });
 };

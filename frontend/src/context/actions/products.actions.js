@@ -85,7 +85,6 @@ export const updateProduct =
         type: 'UPDATING_PRODUCT_SUCCESS',
         payload: { ...response.data },
       });
-      console.log(...response.data);
     } catch (err) {
       if (!err?.response) {
         console.log('No hay respuesta del servidor'); //Seria conveniente borrar este if??????

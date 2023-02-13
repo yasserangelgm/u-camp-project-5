@@ -24,7 +24,6 @@ const AdminProducts = () => {
     getProducts({})(productDispatch);
   }, []);
 
-  console.log('PRODUCT STATE', productsState);
   return (
     <>
       <AdminPageHeader

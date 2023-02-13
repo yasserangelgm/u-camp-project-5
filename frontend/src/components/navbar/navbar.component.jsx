@@ -12,7 +12,6 @@ const NavBar = () => {
     },
   } = useAuth();
 
-  console.log('NAVBAR', data?.user);
   const [clicked, setClicked] = useState(false);
 
   const handleClick = () => {

@@ -36,14 +36,15 @@ const authReducer = (state, { payload, type }) => {
         },
       };
 
-    /*  return {
+    case 'LOGOUT_SUCCESS':
+      return {
         ...state,
         auth: {
-          ...state.auth,
           inProgress: false,
-          accessToken: payload,
+          data: null,
+          error: null,
         },
-      }; */
+      };
     default:
       return state;
   }

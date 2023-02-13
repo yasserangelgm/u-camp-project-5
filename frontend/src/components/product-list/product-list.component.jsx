@@ -12,8 +12,6 @@ const ProductList = ({
     productsState: { products },
   } = useProduct();
 
-  console.log(products);
-
   return (
     <>
       <section className="product-list-container" id="product-list-container">

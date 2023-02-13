@@ -6,7 +6,7 @@ import { Header } from '../header/header.component';
 
 const Root = () => {
   const context = useAuth();
-  console.log(context);
+
   return (
     <div>
       <Header />

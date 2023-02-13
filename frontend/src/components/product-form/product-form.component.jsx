@@ -29,7 +29,6 @@ const ProductForm = ({
   }, [currentProduct, productId]);
 
   const handleSubmit = async (e) => {
-    console.log('SUBMIT mode', mode);
     e.preventDefault();
     if (mode === 0) {
       addProduct(form)(productDispatch);
@@ -56,7 +55,7 @@ const ProductForm = ({
         <Modal.Body>
           <form onSubmit={handleSubmit}>
             {/* {productId && <h6>{currentProduct?._id}</h6>} */}
-            {console.log('CURRENT FORM JSX', form)}
+
             <div className="mb-3">
               {/* <label className="form-label">Nombre del producto</label> */}
               <input

@@ -7,8 +7,6 @@ const RequireAuth = () => {
   } = useAuth();
   const location = useLocation();
 
-  console.log('DESDE REQUIRE AUTH', auth?.data?.user?.role, auth.inProgress);
-
   return auth?.data?.user.role === 1 ? (
     <Outlet />
   ) : auth?.data?.user ? (

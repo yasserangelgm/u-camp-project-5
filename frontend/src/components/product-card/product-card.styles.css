@@ -1,0 +1,9 @@
+.card {
+  max-width: 20rem;
+  margin: auto auto;
+}
+.card-image {
+  height: 300px;
+  width: 100%;
+  object-fit: cover;
+}

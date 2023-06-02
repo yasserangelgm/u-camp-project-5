@@ -1,24 +1,83 @@
-import logo from './logo.svg';
 import './App.css';
+import ErrorPage from './pages/error-page/error-page.page';
+import RegisterPage from './pages/register/register.page';
+import LoginPage from './pages/login/login.page';
+import Root from './components/root-user/root.component';
+import RootAdmin from './components/root-admin/root-admin.component';
+import HomePage from './pages/home/home.page';
+import RequireAuth from './components/require-auth';
+import Unauthorized from './pages/unauthorized/unauthorized.page';
+import AdminHomePage from './pages/admin/home/admin-home.page';
+import Users from './components/user/users.component';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import UserProfile from './pages/user-profile/user-profile.page';
+import LogoOut from './components/logout';
+import AdminProducts from './pages/admin/products/admin-products.page';
+
+import useForm from './hooks/useForm';
+import { useEffect } from 'react';
+import useAuth from './hooks/useAuth';
+import { getAuth } from './context/actions/auth.actions';
+import PersistLogin from './components/persist-login';
+import Shop from './pages/shop/shop.page';
 
 function App() {
+  const { authDispatch } = useAuth();
+
+  useEffect(() => {
+    getAuth()(authDispatch);
+  }, [authDispatch]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    /* Public routes */
+    <BrowserRouter basename="/">
+      <Routes>
+        <Route element={<PersistLogin />}>
+          <Route path="/" element={<Root />} errorElement={<ErrorPage />}>
+            <Route index element={<HomePage />}></Route>
+            <Route
+              path="/signup"
+              element={<RegisterPage form={useForm()} />}
+            ></Route>
+            <Route
+              path="/login"
+              element={<LoginPage form={useForm()} />}
+            ></Route>
+            <Route path="/profile" element={<UserProfile />}></Route>
+            <Route path="/logout" element={<LogoOut />}></Route>
+            <Route path="/contact" element={<RegisterPage />}></Route>
+            <Route path="/shop" element={<Shop />}></Route>
+            <Route
+              path="/products:productId"
+              element={<RegisterPage />}
+            ></Route>
+            <Route path="unauthorized" element={<Unauthorized />}></Route>
+          </Route>
+
+          {/* Protected routes */}
+
+          <Route element={<RequireAuth />}>
+            <Route
+              path="/admin/dashboard"
+              element={<RootAdmin />}
+              errorElement={<ErrorPage />}
+            >
+              <Route index element={<AdminHomePage />}></Route>
+              <Route
+                path="/admin/dashboard/products"
+                element={<AdminProducts />}
+              ></Route>
+              <Route
+                path="/admin/dashboard/categories"
+                element={<LoginPage />}
+              ></Route>
+              <Route path="/admin/dashboard/users" element={<Users />}></Route>
+            </Route>
+          </Route>
+        </Route>
+        <Route path="*" element={<ErrorPage />}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
